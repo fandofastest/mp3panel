@@ -1,7 +1,14 @@
 <?php
-class MP3File
+namespace App\Models;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+
+
+class MP3File extends Model
 {
     protected $filename;
+
     public function __construct($filename)
     {
         $this->filename = $filename;

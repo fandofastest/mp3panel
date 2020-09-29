@@ -137,6 +137,9 @@ class AlbumController extends Controller
      */
     public function destroy(Album $album)
     {
+        $album->delete();
+        Alert::success('Success', 'Artist Dihapus');
+        return redirect()->route('artist.index');
         //
     }
 }

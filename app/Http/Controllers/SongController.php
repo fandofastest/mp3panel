@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use Alert;
 use App\Models\Song;
+use App\Models\MP3File;
 use App\Models\Artist;
 use Illuminate\Http\Request;
 
@@ -20,12 +21,12 @@ class SongController extends Controller
         
         $artist=Artist::all();
 
-         $song = Song::select('songs.id','songs.file as filemp3','songs.title as songname','songs.cover as songcover','artists.name as artistname','artists.cover as artistcover','genres.name as genrename','genres.cover as genrecover','albums.name as albumname','albums.cover as albumcover')
+         $song = Song::select('songs.id','songs.file as filemp3','songs.duration as duration','songs.title as songname','songs.cover as songcover','artists.name as artistname','artists.cover as artistcover','genres.name as genrename','genres.cover as genrecover','albums.name as albumname','albums.cover as albumcover')
                         ->join('artists','artists.id','songs.artist_id')
                         ->join('genres','genres.id','songs.genre_id')
                         ->join('albums','albums.id','songs.album_id')
                         ->get();
-        dd($song);
+        // dd($song);
         // $genre=Genre::all();
 
         return view('song.index', compact('song','artist'));
@@ -36,6 +37,19 @@ class SongController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function getDetailJson($song_id)
+    {   
+        $song['data'] = Song::select('songs.id','songs.file as filemp3','songs.duration as duration','songs.title as songname','songs.cover as songcover','artists.name as artistname','artists.cover as artistcover','genres.name as genrename','genres.cover as genrecover','albums.name as albumname','albums.cover as albumcover')
+        ->join('artists','artists.id','songs.artist_id')
+        ->join('genres','genres.id','songs.genre_id')
+        ->join('albums','albums.id','songs.album_id')
+        ->where('songs.id',$song_id)
+        ->get();
+        
+        return response()->json($song);
+
+    }
     public function create()
     {
         //
@@ -52,6 +66,12 @@ class SongController extends Controller
         if($request->hasfile('mp3'))  {
          $title =$request->input('name');   
         $filemp3=$request->file('mp3');    
+
+        $mp3file = new MP3File($filemp3);//http://www.npr.org/rss/podcast.php?id=510282
+        $duration1 = $mp3file->getDurationEstimate();//(faster) for CBR only
+        $duration1= gmdate("i:s", $duration1);
+        //  dd($duration1);   
+
         $filename=$request->input('name');    
         $filename = preg_replace('/\s*/', '', $filename);
         // convert the string to all lowercase
@@ -74,6 +94,7 @@ class SongController extends Controller
             $song->lyric=$filename.'.'.$filelirik->extension();
             $song->cover=$filename.'.'.$filecover->extension();
             $song->file=$filename.'.'.$filemp3->extension();
+            $song->duration=$duration1;
             $song->save();
             Alert::success('Success', 'Album Tersimpan');
 
@@ -129,6 +150,9 @@ class SongController extends Controller
      */
     public function destroy(Song $song)
     {
+        $song->delete();
+        Alert::success('Success', 'Song Berhasil Dihapus');
+        return redirect()->route('song.index');
         //
     }
 }

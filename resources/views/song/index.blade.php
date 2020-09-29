@@ -52,6 +52,7 @@
                                             <tr>
                                                 <th scope="col" class="sort" data-sort="name">No</th>
                                                 <th scope="col" class="sort" data-sort="budget">Title</th>
+                                                <th scope="col" class="sort" data-sort="budget">Duration</th>
                                                 <th scope="col" class="sort" data-sort="budget">Album Name</th>
                                                 <th scope="col" class="sort" data-sort="budget">Artist Name</th>
                                                 <th scope="col" class="sort" data-sort="budget">Genre Name</th>
@@ -78,7 +79,16 @@
                                                         
                                                    
                                                         <div class="media-body">
-                                                        <span class="name mb-0 text-sm">{{$item['title']}}</span>
+                                                        <span class="name mb-0 text-sm">{{$item['songname']}}</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td scope="row">
+                                                    <div class="media align-items-center">
+                                                        
+                                                   
+                                                        <div class="media-body">
+                                                        <span class="name mb-0 text-sm">{{$item['duration']}}</span>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -135,9 +145,10 @@
                                             
                                                 <td class="text-right">
                                                     
-                                                    <form action="{{ route('album.destroy',$item->id) }}" method="POST">
+                                                    <form action="{{ route('song.destroy',$item->id) }}" method="POST">
    
-                                                        {{-- <a class="btn btn-info" href="{{ route('artist.show',$item->id) }}">Show</a> --}}
+                                                        <a class="btn btn-info"  id="modalshow">Play</a>
+                                                    <input hidden  id="iddata" value="{{$item->id}}"/>
                                         
                                                         {{-- <a class="btn btn-primary" href="{{ route('artist.edit',$item->id) }}">Edit</a> --}}
                                        
@@ -255,14 +266,96 @@
                 </div>
                 </div>
 
+                <!-- Modal -->
+                <div class="modal fade" id="modalplay" role="dialog">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="titlemodal">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                          
+                            <p id="artist" class="card-text">Artist</p>
+                            <p id="album" class="card-text">album</p>
+                            <p id="genre" class="card-text">genre</p>
+
+                            <audio id="player" controls="controls">
+                                <source id="mp3_src" src="" type="audio/mp3" />
+                                Your browser does not support the audio element.
+                          </audio>
+                              
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+
         @include('layouts.footers.auth')
     </div>
+
 
    
 @endsection
 
 @push('js')
 <script>
+
+$('#modalshow').click(function(e){
+    var dataid = $("#iddata").val();
+    $('#modalplay').modal();
+    
+
+
+        $.ajax({
+            url:'/api/song/'+dataid,
+            type:'GET',
+            dataType: 'json',
+            success:function(data) {
+                var title = data['data'][0].songname;
+                var artist = data['data'][0].artistname;
+                var album = data['data'][0].albumname;
+                var genre = data['data'][0].genrename;
+                var sourceUrl =  data['data'][0].filemp3;
+                var srcmp3 = "{{ asset('storage/songmp3/')}}"+'/'+sourceUrl;
+
+                // console.log(genre);
+
+                $('#titlemodal').text(title);
+                $('p#artist').text(artist);
+                $('p#album').text(album);
+                $('p#genre').text(genre);
+
+                var audio = $("#player");      
+                $("#mp3_src").attr("src", srcmp3);
+                /****************/
+                audio[0].pause();
+                audio[0].load();
+
+                audio[0].oncanplaythrough = audio[0].play();
+
+                        
+
+       
+            },
+        });
+    });
+
+
+
+
+
+
+
+
+
+
     $(function(){
         $('#selectcover').change(function(e){
             var fileName = e.target.files[0].name;

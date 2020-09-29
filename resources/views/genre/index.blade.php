@@ -92,7 +92,7 @@
                                             
                                                 <td class="text-right">
                                                     
-                                                <a href="{{url('genre/hapus/'.$item->id)}}" type="button" class="btn btn-danger">Danger</a>
+                                                <a href="{{url('genre/hapus/'.$item->id)}}" type="button" class="btn btn-danger">Hapus</a>
 
                                                 </td>
                                             </tr>
