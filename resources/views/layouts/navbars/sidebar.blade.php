@@ -134,7 +134,16 @@
                 </li> --}}
             </ul>
             <!-- Divider -->
+
             <hr class="my-3">
+                <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/playlist') }}">
+                        <i class="ni ni-bullet-list-67 text-primary"></i> {{ __('Playlist') }}
+                    </a>
+                </li>
+            </ul>
+
             <!-- Heading -->
             
             

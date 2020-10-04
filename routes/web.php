@@ -6,6 +6,7 @@ use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\GenreController;
+use App\Http\Controllers\PlaylistController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('album', AlbumController::class);
 
 	Route::resource('artist', ArtistController::class);
+
+	Route::resource('playlist', PlaylistController::class);
 
 
 	

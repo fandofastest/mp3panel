@@ -32,6 +32,7 @@ class SongController extends Controller
         return view('song.index', compact('song','artist'));
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
@@ -40,6 +41,8 @@ class SongController extends Controller
 
     public function getDetailJson($song_id)
     {   
+
+        
         $song['data'] = Song::select('songs.id','songs.file as filemp3','songs.duration as duration','songs.title as songname','songs.cover as songcover','artists.name as artistname','artists.cover as artistcover','genres.name as genrename','genres.cover as genrecover','albums.name as albumname','albums.cover as albumcover')
         ->join('artists','artists.id','songs.artist_id')
         ->join('genres','genres.id','songs.genre_id')
@@ -50,6 +53,9 @@ class SongController extends Controller
         return response()->json($song);
 
     }
+
+
+  
     public function create()
     {
         //
