@@ -33,6 +33,9 @@ Route::get('listallsongbyplaylist/{playlist_id}', [PlaylistController::class, 'l
 
 Route::get('mobile/', [MobileController::class, 'index'])->name('index');
 Route::get('mobile/{title}/', [MobileController::class, 'getSongByTitle'])->name('getSongByTitle');
+Route::get('mobile/playlistsong/{playlistid}/', [MobileController::class, 'getSongByPlaylist'])->name('getSongByPlaylist');
+Route::get('mobile/genre/{genrename}/', [MobileController::class, 'getSongByGenre'])->name('getSongByGenre');
+Route::get('mobile/album/{albumid}/', [MobileController::class, 'getSongByAlbum'])->name('getSongByAlbum');
 
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
