@@ -103,9 +103,11 @@
                                                 <td class="text-right">
                                                     
                                                     <form action="{{ route('song.destroy',$item->id) }}" method="POST">
-   
-                                                        <a class="btn btn-info"  id="modalshow">Play</a>
-                                                    <input hidden  id="iddata" value="{{$item->id}}"/>
+                                                    <button id="buttonadd" onclick="addsong({{$item->id}})"  class="btn btn-icon btn-success" type="button">
+                                                            <span class="btn-inner-icon"><i id="idiconadd" class="ni ni-fat-add"></i></span>
+                                                        </button>
+                                                        <a class="btn btn-info" onclick="detailplaylist({{$item->id}})"  id="modalshow">Detail</a>
+                                                             <input hidden  id="iddata" value="{{$item->id}}"/>
                                         
                                                         {{-- <a class="btn btn-primary" href="{{ route('artist.edit',$item->id) }}">Edit</a> --}}
                                        
@@ -188,6 +190,87 @@
                     
                 </div>
                 </div>
+<!-- Modal Add to playlist -->
+<div class="modal fade" id="modaladdsong" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="titlemodal">Playlists</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body" id="mplaylist">
+        
+            <div class="table-responsive">
+                    <div>
+                    <table class="table align-items-center table-dark">
+                  
+                        <tbody class="list" id="tablesong">
+                            
+                                                               
+                            
+                        </tbody>
+                    </table>
+                </div>
+                
+                </div>
+
+          
+        
+              
+        </div>
+        <div class="modal-footer">
+
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+
+        
+        </div>
+    </div>
+    </div>
+</div>
+
+                 <!-- Modal Add to playlist -->
+                 <div class="modal fade" id="modaladdtoplaylist" role="dialog">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="titlemodal">Playlists</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body" id="mplaylist">
+                        
+                            <div class="table-responsive">
+                                    <div>
+                                    <table class="table align-items-center table-dark">
+                                  
+                                        <tbody class="list" id="tableplaylist">
+                                            
+                                                                               
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                </div>
+
+                          
+                        
+                              
+                        </div>
+                        <div class="modal-footer">
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+
+                        
+                        </div>
+                    </div>
+                    </div>
+                </div>
 
                 <!-- Modal -->
                 <div class="modal fade" id="modalplay" role="dialog">
@@ -218,6 +301,156 @@
                     </div>
                     </div>
                 </div>
+
+                <script>
+
+
+
+function detailplaylist(playlistid){
+
+        $("#tableplaylist").empty();
+        $.ajax({
+            url:'/api/listsongbyplaylist/'+playlistid,
+            type:'GET',
+            dataType: 'json',
+            success:function(data) {
+
+                for (let i = 0; i < data['data'].length; i++) {                    
+                var id = data['data'][i].id;
+                var songname = data['data'][i].songname;
+                var artistname = data['data'][i].artistname;    
+                icon='ni-fat-delete';
+                warna='danger';
+       
+                var playlists =`<tr>
+                                                <td scope="row">
+                                                    <div class="media align-items-center">                                                      
+                                                        <div class="media-body">
+                                                            <span class="name mb-0 text-sm">`+songname+`</span>
+                                                           
+
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td scope="row">
+                                                    <button id="buttonicon`+id+`" onclick="rmsong(`+playlistid+`,`+id+`)"  class="btn btn-icon btn-`+warna+`" type="button">
+                                                        <span class="btn-inner--icon"><i id="idicon`+id+`" class="ni `+icon+`"></i></span>
+                                                    </button>
+                                                </td>
+
+                                            </tr>        `;  // Create with DOM
+                 $( "#tableplaylist" ).append(playlists);
+                    
+                }
+
+                
+    
+                        
+                $('#modaladdtoplaylist').modal();
+
+       
+            },
+        });
+    }
+
+    function addsong(playlist_id){
+
+$("#tablesong").empty();
+$.ajax({
+    url:'/api/listallsongbyplaylist/'+playlist_id,
+    type:'GET',
+    dataType: 'json',
+    success:function(data) {
+
+        for (let i = 0; i < data['data'].length; i++) {                    
+        var id = data['data'][i].id;
+        var songname = data['data'][i].songname;
+        var artistname = data['data'][i].artistname;    
+        var status = data['data'][i].status;
+                icon='ni-fat-add';
+                warna='success';
+                mfunction=`addpl(`+playlist_id+`,`+id+`)`;        
+                if (status==1) {
+                    icon='ni-fat-delete';
+                    warna='danger';
+                    mfunction=`rmsong(`+playlist_id+`,`+id+`)`;
+                    
+                }
+
+        var playlists =`<tr>
+                                        <td scope="row">
+                                            <div class="media align-items-center">                                                      
+                                                <div class="media-body">
+                                                    <span class="name mb-0 text-sm">`+songname+`</span>
+                                                   
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td scope="row">
+                                            <button id="buttoniconadd`+id+`" onclick="`+mfunction+`"  class="btn btn-icon btn-`+warna+`" type="button">
+                                                <span class="btn-inner--icon"><i id="idiconadd`+id+`" class="ni `+icon+`"></i></span>
+                                            </button>
+                                        </td>
+
+                                    </tr>        `;  // Create with DOM
+         $( "#tablesong" ).append(playlists);
+            
+        }
+
+        
+
+                
+        $('#modaladdsong').modal();
+
+
+    },
+});
+}
+
+    function addpl(id,songid) {
+  
+  $.ajax({
+          url:'/api/addtoplaylist/'+id+'/'+songid,
+          type:'GET',
+          dataType: 'json',
+          success:function(data) {           
+                                    
+              // $('#idicon['+id+']').removeClass('ni-fat-add').addClass('ni-fat-delete');
+              $("#idiconadd"+id+"").removeClass("ni ni-fat-add").addClass("ni ni-fat-delete");
+              $("#buttoniconadd"+id+"").attr("onclick","rmsong("+id+","+songid+")");
+              $("#buttoniconadd"+id+"").removeClass("btn btn-icon btn-success").addClass("btn btn-icon btn-danger");
+
+
+              console.log(data);
+              
+
+     
+     
+          },
+      });
+}
+
+
+    function rmsong(id,songid) {
+  
+        $.ajax({
+          url:'/api/rmplaylist/'+id+'/'+songid,
+          type:'GET',
+          dataType: 'json',
+          success:function(data) {
+
+              $("#idiconadd"+id+"").removeClass("ni ni-fat-delete").addClass("ni ni-fat-add");
+              $("#buttoniconadd"+id+"").attr("onclick","addpl("+id+","+songid+")");
+              $("#buttoniconadd"+id+"").removeClass("btn btn-icon btn-danger").addClass("btn btn-icon btn-success");
+     
+     
+          },
+      });
+}
+
+    
+                 </script>       
 
 
         @include('layouts.footers.auth')

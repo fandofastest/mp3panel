@@ -404,10 +404,11 @@ function playMusic(songid){
                 var status = data['playlist'][i].status;
                 icon='ni-fat-add';
                 warna='success';
-
+                mfunction=`addpl(`+id+`,`+songid+`)`;        
                 if (status==1) {
                     icon='ni-fat-delete';
                     warna='danger';
+                    mfunction=`rmpl(`+id+`,`+songid+`)`;
                     
                 }
                 var playlists =`<tr>
@@ -421,7 +422,7 @@ function playMusic(songid){
                                                     </div>
                                                 </td>
                                                 <td scope="row">
-                                                    <button id="buttonicon`+id+`" onclick="addpl(`+id+`,`+songid+`)" class="btn btn-icon btn-`+warna+`" type="button">
+                                                    <button id="buttonicon`+id+`" onclick="`+mfunction+`" class="btn btn-icon btn-`+warna+`" type="button">
                                                         <span class="btn-inner--icon"><i id="idicon`+id+`" class="ni `+icon+`"></i></span>
                                                     </button>
                                                 </td>
@@ -481,6 +482,7 @@ function addpl(id,songid) {
 
 
                 console.log(data);
+                
 
        
        

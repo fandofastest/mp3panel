@@ -21,7 +21,7 @@ class SongController extends Controller
         
         $artist=Artist::all();
 
-         $song = Song::select('songs.id','songs.file as filemp3','songs.duration as duration','songs.title as songname','songs.cover as songcover','artists.name as artistname','artists.cover as artistcover','genres.name as genrename','genres.cover as genrecover','albums.name as albumname','albums.cover as albumcover')
+             $song = Song::select('songs.id','songs.file as filemp3','songs.duration as duration','songs.title as songname','songs.cover as songcover','artists.name as artistname','artists.cover as artistcover','genres.name as genrename','genres.cover as genrecover','albums.name as albumname','albums.cover as albumcover')
                         ->join('artists','artists.id','songs.artist_id')
                         ->join('genres','genres.id','songs.genre_id')
                         ->join('albums','albums.id','songs.album_id')
@@ -39,16 +39,31 @@ class SongController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function getDetailJson($song_id)
+    public function getDetailJson($song_id=null)
     {   
 
-        
-        $song['data'] = Song::select('songs.id','songs.file as filemp3','songs.duration as duration','songs.title as songname','songs.cover as songcover','artists.name as artistname','artists.cover as artistcover','genres.name as genrename','genres.cover as genrecover','albums.name as albumname','albums.cover as albumcover')
+   
+
+        if($song_id==null){
+            $song['data']= Song::select('songs.id','songs.file as filemp3','songs.duration as duration','songs.title as songname','songs.cover as songcover','artists.name as artistname','artists.cover as artistcover','genres.name as genrename','genres.cover as genrecover','albums.name as albumname','albums.cover as albumcover')
+        ->join('artists','artists.id','songs.artist_id')
+        ->join('genres','genres.id','songs.genre_id')
+        ->join('albums','albums.id','songs.album_id')
+        ->get();
+            # code...
+        }
+
+        else {
+            $song['data']= Song::select('songs.id','songs.file as filemp3','songs.duration as duration','songs.title as songname','songs.cover as songcover','artists.name as artistname','artists.cover as artistcover','genres.name as genrename','genres.cover as genrecover','albums.name as albumname','albums.cover as albumcover')
         ->join('artists','artists.id','songs.artist_id')
         ->join('genres','genres.id','songs.genre_id')
         ->join('albums','albums.id','songs.album_id')
         ->where('songs.id',$song_id)
         ->get();
+
+        }
+
+        // $song->get();
         
         return response()->json($song);
 

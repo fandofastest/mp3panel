@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use Alert;
+use App\Models\Song;
 use App\Models\Playlist;
 use App\Models\Playlistsong;
 use Illuminate\Http\Request;
@@ -18,10 +19,58 @@ class PlaylistController extends Controller
     {
         //
         $playlist = Playlist::all();
+        // dd($playlist);
         return view('playlist.index', compact('playlist'));
 
     }
 
+
+    
+    public function listsongbyplaylist($playlist_id)
+        {   
+         
+            $song['data'] = Playlistsong::select('songs.id','songs.file as filemp3','songs.duration as duration','songs.title as songname','songs.cover as songcover','artists.name as artistname','artists.cover as artistcover','playlistsongs.id as playlistid')
+            ->join('songs','songs.id','playlistsongs.song_id')
+            ->join('artists','artists.id','songs.artist_id')
+            ->where('playlistsongs.playlist_id',$playlist_id)
+            ->get();
+    
+        return response()->json($song);
+
+    }
+
+        
+    public function listallsongbyplaylist($playlist_id)
+        {   
+         
+            $song = Song::select('songs.id','songs.file as filemp3','songs.duration as duration','songs.title as songname','songs.cover as songcover','artists.name as artistname','artists.cover as artistcover')
+            ->join('artists','artists.id','songs.artist_id')
+
+            ->get();
+
+            foreach ($song as $s ) {
+                $newsong=Playlistsong::where('song_id',$s['id'])
+                ->where('playlist_id',$playlist_id)
+                ->get();    
+
+                $s['status']=1;                   
+                if ($newsong->isEmpty()) {      
+
+                $s['status']=0;
+                
+
+                # code...
+                }        
+                    $newpl[]=$s;
+                # code...
+            }
+
+            $res['data']=$newpl;
+
+    
+        return response()->json($res);
+
+    }
     public function getPlaylist($song_id)
         {   
         // $newpl[];   
@@ -31,7 +80,7 @@ class PlaylistController extends Controller
                                 ->where('playlist_id',$pl->id)
                                 ->get();    
               
-                                $pl['status']=1;                   
+             $pl['status']=1;                   
              if ($song->isEmpty()) {      
 
                 $pl['status']=0;
