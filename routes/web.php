@@ -20,7 +20,8 @@ use App\Http\Controllers\PlaylistController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+	return redirect('song');
+
 });
 
 Auth::routes();
