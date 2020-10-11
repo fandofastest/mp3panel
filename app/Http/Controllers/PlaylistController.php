@@ -220,6 +220,9 @@ class PlaylistController extends Controller
      */
     public function destroy(Playlist $playlist)
     {
+        $playlist->delete();
+        Alert::success('Success', 'Playlist Berhasil Dihapus');
+        return redirect()->route('playlist.index');
         //
     }
 }

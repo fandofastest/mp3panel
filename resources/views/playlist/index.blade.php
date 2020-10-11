@@ -102,7 +102,7 @@
                                             
                                                 <td class="text-right">
                                                     
-                                                    <form action="{{ route('song.destroy',$item->id) }}" method="POST">
+                                                    <form action="{{ route('playlist.destroy',$item->id) }}" method="POST">
                                                     <button id="buttonadd" onclick="addsong({{$item->id}})"  class="btn btn-icon btn-success" type="button">
                                                             <span class="btn-inner-icon"><i id="idiconadd" class="ni ni-fat-add"></i></span>
                                                         </button>
