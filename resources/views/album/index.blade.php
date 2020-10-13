@@ -54,6 +54,7 @@
                                                 <th scope="col" class="sort" data-sort="budget">Album Name</th>
                                                 <th scope="col" class="sort" data-sort="budget">Artist Name</th>
                                                 <th scope="col" class="sort" data-sort="budget">Genre Name</th>
+                                                <th scope="col" class="sort" data-sort="budget">Deskripsi</th>
                                                 
                                             </tr>
                                         </thead>
@@ -122,6 +123,15 @@
                                                     </div>
                                                 </td>
                                                 
+                                                <td scope="row">
+                                                    <div class="media align-items-center">
+                                                        
+                                                   
+                                                        <div class="media-body">
+                                                        <span class="name mb-0 text-sm">{{ Str::limit($item['deskripsi'],10)}}</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
                                                 
                                             
                                                 <td class="text-right">
@@ -215,6 +225,9 @@
                             <div class="custom-file">
                                 <input name="image" type="file" class="custom-file-input" id="customFileLang" lang="en" required>
                                 <label class="custom-file-label" for="customFileLang">Select file</label>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control"  placeholder="Deskripsi" id="exampleFormControlTextarea1" rows="3" name="deskripsi"></textarea>
                             </div>
                             
                        
