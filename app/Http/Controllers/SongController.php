@@ -18,10 +18,10 @@ class SongController extends Controller
     public function index()
     {
         //
-        
+
         $artist=Artist::all();
 
-             $song = Song::select('songs.id','songs.file as filemp3','songs.duration as duration','songs.title as songname','songs.cover as songcover','artists.name as artistname','artists.cover as artistcover','genres.name as genrename','genres.cover as genrecover','albums.name as albumname','albums.cover as albumcover')
+             $song = Song::select('songs.id','songs.file as filemp3','songs.lyric as lyric','songs.duration as duration','songs.title as songname','songs.cover as songcover','artists.name as artistname','artists.cover as artistcover','genres.name as genrename','genres.cover as genrecover','albums.name as albumname','albums.cover as albumcover')
                         ->join('artists','artists.id','songs.artist_id')
                         ->join('genres','genres.id','songs.genre_id')
                         ->join('albums','albums.id','songs.album_id')
@@ -40,9 +40,9 @@ class SongController extends Controller
      */
 
     public function getDetailJson($song_id=null)
-    {   
+    {
 
-   
+
 
         if($song_id==null){
             $song['data']= Song::select('songs.id','songs.file as filemp3','songs.duration as duration','songs.title as songname','songs.cover as songcover','artists.name as artistname','artists.cover as artistcover','genres.name as genrename','genres.cover as genrecover','albums.name as albumname','albums.cover as albumcover')
@@ -64,13 +64,13 @@ class SongController extends Controller
         }
 
         // $song->get();
-        
+
         return response()->json($song);
 
     }
 
 
-  
+
     public function create()
     {
         //
@@ -85,33 +85,33 @@ class SongController extends Controller
     public function store(Request $request)
     {
         if($request->hasfile('mp3'))  {
-         $title =$request->input('name');   
-        $filemp3=$request->file('mp3');    
+         $title =$request->input('name');
+        $filemp3=$request->file('mp3');
 
         $mp3file = new MP3File($filemp3);//http://www.npr.org/rss/podcast.php?id=510282
         $duration1 = $mp3file->getDurationEstimate();//(faster) for CBR only
         $duration1= gmdate("i:s", $duration1);
-        //  dd($duration1);   
+        //  dd($duration1);
 
-        $filename=$request->input('name');    
+        $filename=$request->input('name');
         $filename = preg_replace('/\s*/', '', $filename);
         // convert the string to all lowercase
         $filename = strtolower($filename);
         $pathmp3 = Storage::putFileAs('public/songmp3', $request->file('mp3'),$filename.'.'.$filemp3->extension());
-        // dd($pathmp3);     
-        
-        $filelirik=$request->file('lirik');    
+        // dd($pathmp3);
+
+        $filelirik=$request->file('lirik');
         $pathlirik = Storage::putFileAs('public/songlirik', $request->file('lirik'),$filename.'.'.$filelirik->extension());
 
 
-        $filecover=$request->file('image');    
+        $filecover=$request->file('image');
         $pathcover = Storage::putFileAs('public/songcover', $request->file('image'),$filename.'.'.$filecover->extension());
-            
+
             $song = new Song();
             $song->title=$title;
-            $song->artist_id=$request->input('artist');   
-            $song->album_id=$request->input('album');   
-            $song->genre_id=$request->input('genre');   
+            $song->artist_id=$request->input('artist');
+            $song->album_id=$request->input('album');
+            $song->genre_id=$request->input('genre');
             $song->lyric=$filename.'.'.$filelirik->extension();
             $song->cover=$filename.'.'.$filecover->extension();
             $song->file=$filename.'.'.$filemp3->extension();
