@@ -2,7 +2,7 @@
 
 @section('content')
     @include('layouts.headers.cards')
-    
+
     <div class="container-fluid mt--7">
         <div class="row">
             <div class="col-xl-12 mb-5 mb-xl-0">
@@ -18,20 +18,20 @@
                                     <li class="nav-item mr-2 mr-md-0" data-toggle="chart"  >
                                         <a type="button" href="#" class="nav-link py-2 px-3 active"  data-toggle="modal" data-target="#modaladdalbum">
                                             <span class="d-none d-md-block">Add Song</span>
-                                            
+
                                         </a>
                                     </li>
-                                 
+
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
                         <!-- Chart -->
-                       
+
                             <!-- Chart wrapper -->
                             <div class="table-responsive">
-    
+
 
 
 
@@ -56,19 +56,19 @@
                                                 <th scope="col" class="sort" data-sort="budget">Album Name</th>
                                                 <th scope="col" class="sort" data-sort="budget">Artist Name</th>
                                                 <th scope="col" class="sort" data-sort="budget">Genre Name</th>
-                                                
+
                                             </tr>
                                         </thead>
                                         <tbody class="list">
                                             @foreach ($song as $item)
-                                                
-                                           
+
+
 
                                             <tr>
                                                 <td scope="row">
                                                     <div class="media align-items-center">
-                                                        
-                                                   
+
+
                                                         <div class="media-body">
                                                         <span class="name mb-0 text-sm">{{$item['id']}}</span>
                                                         </div>
@@ -76,8 +76,8 @@
                                                 </td>
                                                 <td scope="row">
                                                     <div class="media align-items-center">
-                                                        
-                                                   
+
+
                                                         <div class="media-body">
                                                         <span class="name mb-0 text-sm">{{$item['songname']}}</span>
                                                         </div>
@@ -85,23 +85,23 @@
                                                 </td>
                                                 <td scope="row">
                                                     <div class="media align-items-center">
-                                                        
-                                                   
+
+
                                                         <div class="media-body">
                                                         <span class="name mb-0 text-sm">{{$item['duration']}}</span>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                
+
                                                 <td scope="row">
                                                     <div class="media align-items-center">
-                                                        
+
                                                         <a href="#" class="avatar rounded-circle mr-3">
-                                                          
-                                                            
+
+
                                                         <img alt="Image placeholder" src="{{ asset('storage/album/'.$item['albumcover'])}}">
-                                                            
-                                                          
+
+
                                                         </a>
                                                         <div class="media-body">
                                                         <span class="name mb-0 text-sm">{{$item['albumname']}}</span>
@@ -111,13 +111,13 @@
 
                                                 <td scope="row">
                                                     <div class="media align-items-center">
-                                                        
+
                                                         <a href="#" class="avatar rounded-circle mr-3">
-                                                          
-                                                            
+
+
                                                         <img alt="Image placeholder" src="{{ asset('storage/artist/'.$item['artistcover'])}}">
-                                                            
-                                                          
+
+
                                                         </a>
                                                         <div class="media-body">
                                                         <span class="name mb-0 text-sm">{{$item['artistname']}}</span>
@@ -127,63 +127,62 @@
 
                                                 <td scope="row">
                                                     <div class="media align-items-center">
-                                                        
+
                                                         <a href="#" class="avatar rounded-circle mr-3">
-                                                          
-                                                            
+
+
                                                         <img alt="Image placeholder" src="{{ asset('storage/genre/'.$item['genrecover'])}}">
-                                                            
-                                                          
+
+
                                                         </a>
                                                         <div class="media-body">
                                                         <span class="name mb-0 text-sm">{{$item['genrename']}}</span>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                
-                                                
-                                            
+
+
+
                                                 <td class="text-right">
-                                                    
+
                                                     <form action="{{ route('song.destroy',$item->id) }}" method="POST">
-   
+
                                                         <a class="btn btn-info" onclick="mdshow({{$item->id}})"  id="modalshowaddplaylist">Add to PLaylist</a>
-                                                        <a class="btn btn-info" onclick="playMusic({{$item->id}})"  id="modalshow">Play</a>
-                                        
-                                                        {{-- <a class="btn btn-primary" href="{{ route('artist.edit',$item->id) }}">Edit</a> --}}
-                                       
+                                                        <a class="btn btn-info" onclick="playMusic({{$item->id}})"  id="modalshow">Detail</a>
+
+
                                                         @csrf
                                                         @method('DELETE')
-                                          
+
                                                         <button type="submit" class="btn btn-danger">Delete</button>
                                                     </form>
 
                                                 </td>
                                             </tr>
                                             @endforeach
-                                            
-                                            
-                                           
-                                            
-                                           
-                                            
+
+
+
+
+
+
                                         </tbody>
                                     </table>
                                 </div>
-                                
+
                                 </div>
-                           
+
                     </div>
                 </div>
             </div>
-   
+
         </div>
         <div class="row mt-5">
             <div class="col-xl-8 mb-5 mb-xl-0">
-                
+
             </div>
             <div class="col-xl-4">
-                
+
             </div>
         </div>
 
@@ -193,20 +192,20 @@
                     <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modaladdalbum">Add New Song</h5>
-                       
 
-                        
+
+
 
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                     
+
                         <form method="POST" action="{{ route('song.store') }}" enctype="multipart/form-data" >
                             @csrf
 
-                            
+
                             <div class="form-group">
                              <input class="form-control" name="name" type="text" placeholder="Song Title" id="example-text-input" required>
                             </div>
@@ -217,25 +216,25 @@
                                   @foreach ($artist as $item)
                                 <option value="{{$item->id}}">{{$item->name}}</option>
                                   @endforeach
-                            
+
                                 </select>
-                              </div>   
+                              </div>
 
                               <div class="form-group">
                                 <select  class="form-control" name="album" id="album" data-toggle="select" title="Simple select" data-live-search="true" data-live-search-placeholder="Search ..." required >
                                   <option>Pilih Album</option>
-                                  
-                            
+
+
                                 </select>
-                              </div>   
+                              </div>
 
                               <div class="form-group">
                                 <select  class="form-control" name="genre" id="genre" data-toggle="select" title="Simple select" data-live-search="true" data-live-search-placeholder="Search ..." required >
                                   <option>Pilih Genre</option>
-                                  
-                            
+
+
                                 </select>
-                              </div>   
+                              </div>
 
 
                               <div class="custom-file">
@@ -247,14 +246,14 @@
                                 <input name="mp3" type="file" class="custom-file-input" id="selectsong" lang="en" required>
                                 <label class="custom-file-label" id="labelsong" for="customFileLang">Select Song</label>
                             </div>
-                              
+
 
                             <div class="custom-file">
                                 <input name="lirik" type="file" class="custom-file-input" id="selectlyric" lang="en" required>
                                 <label class="custom-file-label" id="labellyric" for="customFileLang">Select Lyric</label>
                             </div>
-                            
-                       
+
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -262,7 +261,7 @@
                     </form>
                     </div>
                     </div>
-                    
+
                 </div>
                 </div>
 
@@ -277,20 +276,27 @@
                         </button>
                         </div>
                         <div class="modal-body">
-                          
-                            <p id="artist" class="card-text">Artist</p>
-                            <p id="album" class="card-text">album</p>
-                            <p id="genre" class="card-text">genre</p>
+
+
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" id="titlesong" name="name" >
+                                <div class="input-group-append">
+                                    <button id="buttontitle" class="btn btn-primary btn-fab btn-icon btn-round" >
+                                        <i class="ni ni-check-bold"></i>
+                                      </button>
+                                    </div>
+                              </div>
+
 
                             <audio id="player" controls="controls">
                                 <source id="mp3_src" src="" type="audio/mp3" />
                                 Your browser does not support the audio element.
                           </audio>
-                              
+
                         </div>
                         <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        
+
                         </div>
                     </div>
                     </div>
@@ -307,31 +313,31 @@
                         </button>
                         </div>
                         <div class="modal-body" id="mplaylist">
-                        
+
                             <div class="table-responsive">
                                     <div>
                                     <table class="table align-items-center table-dark">
-                                  
+
                                         <tbody class="list" id="tableplaylist">
-                                            
-                                                                               
-                                            
+
+
+
                                         </tbody>
                                     </table>
                                 </div>
-                                
+
                                 </div>
 
-                          
-                        
-                              
+
+
+
                         </div>
                         <div class="modal-footer">
 
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
 
-                        
+
                         </div>
                     </div>
                     </div>
@@ -341,7 +347,7 @@
     </div>
 
 
-   
+
 @endsection
 
 @push('js')
@@ -364,23 +370,41 @@ function playMusic(songid){
                 // console.log(genre);
 
                 $('#titlemodal').text(title);
-                $('p#artist').text(artist);
-                $('p#album').text(album);
-                $('p#genre').text(genre);
+                $('#titlesong').val(title);
+                $("#buttontitle").attr("onclick","updatetitle("+songid+")");
 
-                var audio = $("#player");      
+
+                var audio = $("#player");
                 $("#mp3_src").attr("src", srcmp3);
                 /****************/
                 audio[0].pause();
                 audio[0].load();
 
                 audio[0].oncanplaythrough = audio[0].play();
+                audio[0].pause();
 
-                        
 
-       
+
+
             },
         });
+    }
+
+
+    function updatetitle(songid){
+        $.ajax({
+            url:'/song',
+            type:'POST',
+            dataType: 'json',
+            success:function(data) {
+
+
+
+
+            },
+        });
+
+
     }
 
 
@@ -397,26 +421,26 @@ function playMusic(songid){
             success:function(data) {
 
                 for (let i = 0; i < data['playlist'].length; i++) {
-                    
+
                     var id = data['playlist'][i].id;
                 var name = data['playlist'][i].name;
                 var cover = data['playlist'][i].cover;
                 var status = data['playlist'][i].status;
                 icon='ni-fat-add';
                 warna='success';
-                mfunction=`addpl(`+id+`,`+songid+`)`;        
+                mfunction=`addpl(`+id+`,`+songid+`)`;
                 if (status==1) {
                     icon='ni-fat-delete';
                     warna='danger';
                     mfunction=`rmpl(`+id+`,`+songid+`)`;
-                    
+
                 }
                 var playlists =`<tr>
                                                 <td scope="row">
-                                                    <div class="media align-items-center">                                                      
+                                                    <div class="media align-items-center">
                                                         <div class="media-body">
                                                             <span class="name mb-0 text-sm">`+name+`</span>
-                                                           
+
 
                                                         </div>
                                                     </div>
@@ -429,30 +453,30 @@ function playMusic(songid){
 
                                             </tr>        `;  // Create with DOM
                                              $( "#tableplaylist" ).append(playlists);
-                    
+
                 }
 
-                
-    
-                        
+
+
+
                 $('#modaladdtoplaylist').modal();
 
-       
+
             },
         });
     }
-    
+
 
 
 function rmpl(id,songid) {
-  
+
     $.ajax({
             url:'/api/rmplaylist/'+id+'/'+songid,
             type:'GET',
             dataType: 'json',
             success:function(data) {
-              
-                                      
+
+
                 // $('#idicon['+id+']').removeClass('ni-fat-add').addClass('ni-fat-delete');
                 $("#idicon"+id+"").removeClass("ni ni-fat-delete").addClass("ni ni-fat-add");
                 console.log(data);
@@ -460,21 +484,21 @@ function rmpl(id,songid) {
                 $("#buttonicon"+id+"").removeClass("btn btn-icon btn-danger").addClass("btn btn-icon btn-success");
 
 
-       
-       
+
+
             },
         });
 }
 
 function addpl(id,songid) {
-  
+
     $.ajax({
             url:'/api/addtoplaylist/'+id+'/'+songid,
             type:'GET',
             dataType: 'json',
             success:function(data) {
-              
-                                      
+
+
                 // $('#idicon['+id+']').removeClass('ni-fat-add').addClass('ni-fat-delete');
                 $("#idicon"+id+"").removeClass("ni ni-fat-add").addClass("ni ni-fat-delete");
                 $("#buttonicon"+id+"").attr("onclick","rmpl("+id+","+songid+")");
@@ -482,10 +506,10 @@ function addpl(id,songid) {
 
 
                 console.log(data);
-                
 
-       
-       
+
+
+
             },
         });
 }
@@ -499,7 +523,7 @@ function addpl(id,songid) {
             $("#labelcover").append(fileName);
         });
         $('#selectsong').change(function(e){
-           
+
 
             var fileName = e.target.files[0].name;
             $("#labelsong").empty();
@@ -513,7 +537,7 @@ function addpl(id,songid) {
 
 
         $( "#album" ).change(function() {
-    
+
     var data = $(this).val();
 
 
@@ -539,7 +563,7 @@ function addpl(id,songid) {
                   if(i==0){
                     var option = "<option selected value='"+genreid+"'>"+genrename+"</option>";
 
-                  }  
+                  }
                   else {
                     var option = "<option value='"+genreid+"'>"+genrename+"</option>";
 
@@ -554,11 +578,11 @@ function addpl(id,songid) {
     });
 
 
-        
-     
+
+
 
 $( "#artist" ).change(function() {
-    
+
     var data = $(this).val();
 
 
@@ -589,7 +613,7 @@ $( "#artist" ).change(function() {
                     var option = "<option selected value='"+albumid+"'>"+albumname+"</option>";
                     var optiongenre = "<option selected value='"+genreid+"'>"+genrename+"</option>";
 
-                  }  
+                  }
                   else {
                     var option = "<option value='"+albumid+"'>"+albumname+"</option>";
 
@@ -607,7 +631,7 @@ $( "#artist" ).change(function() {
         });
     });
 
-});    
+});
 </script>
     <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.min.js"></script>
     <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.extension.js"></script>

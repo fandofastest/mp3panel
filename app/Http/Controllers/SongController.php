@@ -101,7 +101,7 @@ class SongController extends Controller
         // dd($pathmp3);
 
         $filelirik=$request->file('lirik');
-        $pathlirik = Storage::putFileAs('public/songlirik', $request->file('lirik'),$filename.'.'.$filelirik->extension());
+        $pathlirik = Storage::putFileAs('public/songlirik', $request->file('lirik'),$filename.'.lrc');
 
 
         $filecover=$request->file('image');
@@ -112,7 +112,7 @@ class SongController extends Controller
             $song->artist_id=$request->input('artist');
             $song->album_id=$request->input('album');
             $song->genre_id=$request->input('genre');
-            $song->lyric=$filename.'.'.$filelirik->extension();
+            $song->lyric=$filename.'.lrc';
             $song->cover=$filename.'.'.$filecover->extension();
             $song->file=$filename.'.'.$filemp3->extension();
             $song->duration=$duration1;
@@ -158,8 +158,10 @@ class SongController extends Controller
      * @param  \App\Models\Song  $song
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Song $song)
+    public function update(Request $request)
     {
+        dd("test");
+
         //
     }
 

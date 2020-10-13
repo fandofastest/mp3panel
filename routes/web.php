@@ -47,8 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
 	// Route::get('album/', [AlbumController::class, 'index'])->name('album');
 	// Route::get('artist', [ArtistController::class, 'index'])->name('artist');
 
-
-	Route::resource('song', SongController::class);
+    Route::resource('song', SongController::class);
 
 	Route::resource('album', AlbumController::class);
 
@@ -57,11 +56,11 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('playlist', PlaylistController::class);
 
 
-	
+
 
 	Route::get('genre/', [GenreController::class, 'index'])->name('genre');
 	Route::post('genre/add', [GenreController::class, 'store'])->name('genreadd');
 	Route::get('genre/hapus/{id}', [GenreController::class, 'destroy'])->name('genrehapus');
-	
+
 });
 
