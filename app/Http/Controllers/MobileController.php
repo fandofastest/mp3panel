@@ -21,7 +21,7 @@ class MobileController extends Controller
     {
          $baseapiurl=asset('storage/');
 
-        $song['data'] = Song::select('songs.id',DB::raw('CONCAT("'.$baseapiurl.'/songmp3/",songs.file) as filemp3'),'songs.duration as duration','songs.title as songname',DB::raw('CONCAT("'.$baseapiurl.'/songcover/",songs.cover) as songcover'),'artists.name as artistname',DB::raw('CONCAT("'.$baseapiurl.'/artist/",artists.cover) as artistcover'),'genres.name as genrename',DB::raw('CONCAT("'.$baseapiurl.'/genre/",genres.cover) as genrecover'),'albums.name as albumname',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as albumcover'))
+        $song['data'] = Song::select('songs.id',DB::raw('CONCAT("'.$baseapiurl.'/songmp3/",songs.file) as filemp3'),DB::raw('CONCAT("'.$baseapiurl.'/songlirik/",songs.lyric) as lyric'),'songs.duration as duration','songs.title as songname',DB::raw('CONCAT("'.$baseapiurl.'/songcover/",songs.cover) as songcover'),'artists.name as artistname',DB::raw('CONCAT("'.$baseapiurl.'/artist/",artists.cover) as artistcover'),'genres.name as genrename',DB::raw('CONCAT("'.$baseapiurl.'/genre/",genres.cover) as genrecover'),'albums.name as albumname',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as albumcover'))
         ->join('artists','artists.id','songs.artist_id')
         ->join('genres','genres.id','songs.genre_id')
         ->join('albums','albums.id','songs.album_id')
@@ -32,16 +32,16 @@ class MobileController extends Controller
         //     $song->where('songs.title',$title);
         //     # code...
         // }
-       
-       
- 
+
+
+
         return response()->json($song);
 
         //
     }
 
     public function getSongByTitle(String $title)
-    {   
+    {
 
         $baseapiurl=asset('storage/');
 
@@ -50,15 +50,15 @@ class MobileController extends Controller
         ->join('genres','genres.id','songs.genre_id')
         ->join('albums','albums.id','songs.album_id')
         ->where('songs.title',$title)
-        ->get();      
- 
+        ->get();
+
         return response()->json($song);
 
         //
     }
-    
+
     public function getSongByPlaylist(String $playlistid)
-    {   
+    {
 
         $baseapiurl=asset('storage/');
 
@@ -69,15 +69,15 @@ class MobileController extends Controller
         ->join('albums','albums.id','songs.album_id')
         ->join('genres','genres.id','songs.genre_id')
         ->where('playlistsongs.playlist_id',$playlistid)
-        ->get();      
- 
+        ->get();
+
         return response()->json($song);
 
         //
     }
 
     public function getSongByGenre(String $genrename)
-    {   
+    {
 
         $baseapiurl=asset('storage/');
 
@@ -88,14 +88,14 @@ class MobileController extends Controller
         ->join('albums','albums.id','songs.album_id')
         ->join('genres','genres.id','songs.genre_id')
         ->where('genres.name',$genrename)
-        ->get();      
- 
+        ->get();
+
         return response()->json($song);
 
         //
     }
     public function getSongByAlbum(String $albumid)
-    {   
+    {
 
         $baseapiurl=asset('storage/');
 
@@ -106,8 +106,8 @@ class MobileController extends Controller
         ->join('albums','albums.id','songs.album_id')
         ->join('genres','genres.id','songs.genre_id')
         ->where('albums.id',$albumid)
-        ->get();      
- 
+        ->get();
+
         return response()->json($song);
 
         //
