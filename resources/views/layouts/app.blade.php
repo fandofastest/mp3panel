@@ -23,7 +23,17 @@
         <link href="{{ asset('argon') }}/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
         <!-- Argon CSS -->
         <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
+            <style>
+                .modal-dialog
+                {
+                    max-width: 60%;
+                    margin: 1.75rem auto;
+                }
+                .modal-lg {
+                    max-width: 100%;
+                }
 
+            </style>
     </head>
     <body class="{{ $class ?? '' }}">
         @auth()

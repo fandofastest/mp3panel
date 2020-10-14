@@ -328,7 +328,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                         </div>
-                        <div class="modal-body modal-lg" id="mplaylist">
+                        <div class="modal-body" id="mplaylist">
 
                             <div class="table-responsive">
                                     <div>

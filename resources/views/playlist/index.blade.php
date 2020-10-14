@@ -160,7 +160,7 @@
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body modal-lg">
+                    <div class="modal-body">
 
                         <form method="POST" action="{{ route('playlist.store') }}" enctype="multipart/form-data" >
                             @csrf
@@ -200,7 +200,7 @@
             <span aria-hidden="true">&times;</span>
         </button>
         </div>
-        <div class="modal-body modal-lg" id="mplaylist">
+        <div class="modal-body " id="mplaylist">
 
             <div class="table-responsive">
                     <div>
