@@ -22,6 +22,8 @@ use App\Http\Controllers\MobileController;
 Route::get('artist/{artistid}', [ArtistController::class, 'getDetailJson'])->name('getDetailArtist');
 Route::get('album/{albumid}', [AlbumController::class, 'getDetailJson'])->name('getDetailAlbum');
 Route::get('song/{songid?}', [SongController::class, 'getDetailJson'])->name('getDetailSong');
+Route::post('song/update', [SongController::class, 'update'])->name('update');
+
 Route::get('getplaylist/{songid}', [PlaylistController::class, 'getPlaylist'])->name('getPlaylist');
 Route::get('addtoplaylist/{playlist_id}/{songid}', [PlaylistController::class, 'addtoplaylist'])->name('addtoplaylist');
 Route::get('rmplaylist/{playlist_id}/{songid}', [PlaylistController::class, 'rmplaylist'])->name('rmplaylist');

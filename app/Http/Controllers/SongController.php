@@ -160,9 +160,54 @@ class SongController extends Controller
      */
     public function update(Request $request)
     {
-        dd("test");
+                $jenis=$request->jenis;
 
-        //
+                if ($jenis=='title') {
+                    $song=Song::where('id',$request->id)
+                    ->update(['title' => $request->title]);
+
+                }
+
+                if ($jenis=='cover') {
+
+                    $filecover=$request->file('file');
+                    $filename=$request->title.time();
+
+                    $pathcover = Storage::putFileAs('public/songcover', $filecover,$filename.'.'.$filecover->extension());
+
+                    $song=Song::where('id',$request->id)
+                    ->update(['cover' => $filename.'.'.$filecover->extension()]);
+
+                }
+                if ($jenis=='mp3') {
+
+                    $filecover=$request->file('file');
+                    $filename=$request->title.time();
+                    $mp3file = new MP3File($filecover);//http://www.npr.org/rss/podcast.php?id=510282
+                    $duration1 = $mp3file->getDurationEstimate();//(faster) for CBR only
+                    $duration1= gmdate("i:s", $duration1);
+
+                    $pathcover = Storage::putFileAs('public/songmp3', $filecover,$filename.'.'.$filecover->extension());
+
+                    $song=Song::where('id',$request->id)
+                    ->update(['file' => $filename.'.'.$filecover->extension(),'duration' => $duration1]);
+
+                }
+                if ($jenis=='lyric') {
+
+                    $filecover=$request->file('file');
+                    $filename=$request->title.time();
+
+                    $pathcover = Storage::putFileAs('public/songlirik', $filecover,$filename.'.lrc');
+
+                    $song=Song::where('id',$request->id)
+                    ->update(['lyric' => $filename.'.lrc']);
+
+                }
+
+
+
+        return response()->json($song);
     }
 
     /**

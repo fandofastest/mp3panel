@@ -288,6 +288,22 @@
                               </div>
 
 
+                              <div class="custom-file">
+                                <input name="image" type="file" class="custom-file-input" id="selectcoverupdate" lang="en" required>
+                                <label class="custom-file-label" id="labelcover" for="customFileLang">Select Cover</label>
+                            </div>
+
+                            <div class="custom-file">
+                                <input name="mp3" type="file" class="custom-file-input" id="selectsongupdate" lang="en" required>
+                                <label class="custom-file-label" id="labelsong" for="customFileLang">Select Song</label>
+                            </div>
+
+
+                            <div class="custom-file">
+                                <input name="lirik" type="file" class="custom-file-input" id="selectlyricupdate" lang="en" required>
+                                <label class="custom-file-label" id="labellyric" for="customFileLang">Select Lyric</label>
+                            </div>
+
                             <audio id="player" controls="controls">
                                 <source id="mp3_src" src="" type="audio/mp3" />
                                 Your browser does not support the audio element.
@@ -343,6 +359,9 @@
                     </div>
                 </div>
 
+                <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
         @include('layouts.footers.auth')
     </div>
 
@@ -371,7 +390,12 @@ function playMusic(songid){
 
                 $('#titlemodal').text(title);
                 $('#titlesong').val(title);
-                $("#buttontitle").attr("onclick","updatetitle("+songid+")");
+
+                $("#buttontitle").attr("onclick","updatetitle("+songid+",'title')");
+
+                $("#selectcoverupdate").attr("onchange","updatesong("+songid+",'cover')");
+                $("#selectsongupdate").attr("onchange","updatesong("+songid+",'mp3')");
+                $("#selectlyricupdate").attr("onchange","updatesong("+songid+",'lyric')");
 
 
                 var audio = $("#player");
@@ -380,8 +404,7 @@ function playMusic(songid){
                 audio[0].pause();
                 audio[0].load();
 
-                audio[0].oncanplaythrough = audio[0].play();
-                audio[0].pause();
+
 
 
 
@@ -390,15 +413,91 @@ function playMusic(songid){
         });
     }
 
+    function updatetitle(songid,tipe){
+        mydata= { id: songid,jenis:tipe, title : $("#titlesong").val()}
 
-    function updatetitle(songid){
         $.ajax({
-            url:'/song',
+            url:'/api/song/update',
             type:'POST',
+            data: mydata ,
             dataType: 'json',
+
             success:function(data) {
 
+                console.log('sukses');
 
+                swal({
+                    title: "Berhasil",
+                    text: "Berhasil Di Update",
+                    icon: "success",
+                  });
+
+
+            },
+        });
+
+    }
+
+    function updatesong(songid,tipe){
+
+        if(tipe=='title'){
+            mydata= { id: songid,jenis:tipe, title : $("#titlesong").val()}
+        }
+        if(tipe=='cover'){
+            var mydata = new FormData();
+            var files = $('#selectcoverupdate').prop('files')[0];
+
+            mydata.append('file',files);
+            mydata.append('jenis',tipe);
+            mydata.append('title',$("#titlesong").val());
+            mydata.append('id',songid);
+
+        }
+
+        if(tipe=='mp3'){
+            var mydata = new FormData();
+            var files = $('#selectsongupdate').prop('files')[0];
+
+            mydata.append('file',files);
+            mydata.append('jenis',tipe);
+            mydata.append('title',$("#titlesong").val());
+            mydata.append('id',songid);
+
+        }
+
+        if(tipe=='lyric'){
+            var mydata = new FormData();
+            var files = $('#selectlyricupdate').prop('files')[0];
+
+            mydata.append('file',files);
+            mydata.append('jenis',tipe);
+            mydata.append('title',$("#titlesong").val());
+            mydata.append('id',songid);
+
+        }
+
+        $.ajax({
+            url:'/api/song/update',
+            type:'POST',
+            data: mydata ,
+            dataType: 'json',
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success:function(data) {
+
+                $("#selectcoverupdate").replaceWith($("#selectcoverupdate").val('').clone(true));
+                $("#selectsongupdate").replaceWith($("#selectsongupdate").val('').clone(true));
+                $("#selectlyricupdate").replaceWith($("#selectlyricupdate").val('').clone(true));
+
+                console.log('sukses');
+
+                swal({
+                    title: "Berhasil",
+                    text: "Berhasil Di Update",
+                    icon: "success",
+                  });
 
 
             },
