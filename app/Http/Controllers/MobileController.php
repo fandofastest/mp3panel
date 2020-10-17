@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Song;
 use App\Models\Playlist;
+use App\Models\Album;
+use App\Models\Genre;
+use App\Models\Artist;
 use App\Models\Playlistsong;
 use Illuminate\Support\Facades\DB;
 
@@ -21,31 +24,74 @@ class MobileController extends Controller
     {
          $baseapiurl=asset('storage/');
 
-        $song['data'] = Song::select('songs.id',DB::raw('CONCAT("'.$baseapiurl.'/songmp3/",songs.file) as filemp3'),DB::raw('CONCAT("'.$baseapiurl.'/songlirik/",songs.lyric) as lyric'),'songs.duration as duration','songs.title as songname',DB::raw('CONCAT("'.$baseapiurl.'/songcover/",songs.cover) as songcover'),'artists.name as artistname',DB::raw('CONCAT("'.$baseapiurl.'/artist/",artists.cover) as artistcover'),'genres.name as genrename',DB::raw('CONCAT("'.$baseapiurl.'/genre/",genres.cover) as genrecover'),'albums.name as albumname',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as albumcover'))
+        $song['song'] = Song::select('songs.id',DB::raw('CONCAT("'.$baseapiurl.'/songmp3/",songs.file) as filemp3'),DB::raw('CONCAT("'.$baseapiurl.'/songlirik/",songs.lyric) as lyric'),'songs.duration as duration','songs.title as songname',DB::raw('CONCAT("'.$baseapiurl.'/songcover/",songs.cover) as songcover'),'artists.name as artistname',DB::raw('CONCAT("'.$baseapiurl.'/artist/",artists.cover) as artistcover'),'genres.name as genrename',DB::raw('CONCAT("'.$baseapiurl.'/genre/",genres.cover) as genrecover'),'albums.name as albumname',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as albumcover'))
         ->join('artists','artists.id','songs.artist_id')
         ->join('genres','genres.id','songs.genre_id')
         ->join('albums','albums.id','songs.album_id')
         ->orderByDesc('songs.created_at')
         ->get();
 
-        // if (!is_null($title)) {
-        //     $song->where('songs.title',$title);
-        //     # code...
-        // }
-
-
-
         return response()->json($song);
 
         //
     }
+
+
+    public function getAllAlbum()
+    {
+
+        $baseapiurl=asset('storage/');
+        $album['album'] = Album::select('id','name',DB::raw('CONCAT("'.$baseapiurl.'/album/",cover) as cover'),'deskripsi')
+        ->get();
+
+        // $album=Album::all();
+        return response()->json($album);
+
+        //
+    }
+
+    public function getAllPlaylist()
+    {
+
+        $baseapiurl=asset('storage/');
+        $playlist['playlist'] = Playlist::select('id','name',DB::raw('CONCAT("'.$baseapiurl.'/playlist/",cover) as cover'))
+        ->get();
+
+        // $album=Album::all();
+        return response()->json($playlist);
+
+        //
+    }
+
+    public function getAllArtist()
+    {
+        $baseapiurl=asset('storage/');
+        $artist['artist'] = Artist::select('id','name',DB::raw('CONCAT("'.$baseapiurl.'/artist/",cover) as cover'))
+        ->get();
+        // dd('ssss');
+        return response()->json($artist);
+        //
+    }
+    public function getAllGenre()
+    {
+
+        $baseapiurl=asset('storage/');
+        $genre['genre'] = Genre::select('id','name',DB::raw('CONCAT("'.$baseapiurl.'/genre/",cover) as cover'))
+        ->get();
+
+        // $album=Album::all();
+        return response()->json($genre);
+
+        //
+    }
+
 
     public function getSongByTitle(String $title)
     {
 
         $baseapiurl=asset('storage/');
 
-        $song['data'] = Song::select('songs.id',DB::raw('CONCAT("'.$baseapiurl.'/songmp3/",songs.file) as filemp3'),DB::raw('CONCAT("'.$baseapiurl.'/songlirik/",songs.lyric) as lyric'),'songs.duration as duration','songs.title as songname',DB::raw('CONCAT("'.$baseapiurl.'/songcover/",songs.cover) as songcover'),'artists.name as artistname',DB::raw('CONCAT("'.$baseapiurl.'/artist/",artists.cover) as artistcover'),'genres.name as genrename',DB::raw('CONCAT("'.$baseapiurl.'/genre/",genres.cover) as genrecover'),'albums.name as albumname',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as albumcover'))
+        $song['song'] = Song::select('songs.id',DB::raw('CONCAT("'.$baseapiurl.'/songmp3/",songs.file) as filemp3'),DB::raw('CONCAT("'.$baseapiurl.'/songlirik/",songs.lyric) as lyric'),'songs.duration as duration','songs.title as songname',DB::raw('CONCAT("'.$baseapiurl.'/songcover/",songs.cover) as songcover'),'artists.name as artistname',DB::raw('CONCAT("'.$baseapiurl.'/artist/",artists.cover) as artistcover'),'genres.name as genrename',DB::raw('CONCAT("'.$baseapiurl.'/genre/",genres.cover) as genrecover'),'albums.name as albumname',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as albumcover'))
         ->join('artists','artists.id','songs.artist_id')
         ->join('genres','genres.id','songs.genre_id')
         ->join('albums','albums.id','songs.album_id')
@@ -68,7 +114,7 @@ class MobileController extends Controller
             # code...
         }
 
-        $song['data'] = Song::select('songs.id',DB::raw('CONCAT("'.$baseapiurl.'/songmp3/",songs.file) as filemp3'),DB::raw('CONCAT("'.$baseapiurl.'/songlirik/",songs.lyric) as lyric'),'songs.duration as duration','songs.title as songname',DB::raw('CONCAT("'.$baseapiurl.'/songcover/",songs.cover) as songcover'),'artists.name as artistname',DB::raw('CONCAT("'.$baseapiurl.'/artist/",artists.cover) as artistcover'),'genres.name as genrename',DB::raw('CONCAT("'.$baseapiurl.'/genre/",genres.cover) as genrecover'),'albums.name as albumname',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as albumcover'))
+        $song['song'] = Song::select('songs.id',DB::raw('CONCAT("'.$baseapiurl.'/songmp3/",songs.file) as filemp3'),DB::raw('CONCAT("'.$baseapiurl.'/songlirik/",songs.lyric) as lyric'),'songs.duration as duration','songs.title as songname',DB::raw('CONCAT("'.$baseapiurl.'/songcover/",songs.cover) as songcover'),'artists.name as artistname',DB::raw('CONCAT("'.$baseapiurl.'/artist/",artists.cover) as artistcover'),'genres.name as genrename',DB::raw('CONCAT("'.$baseapiurl.'/genre/",genres.cover) as genrecover'),'albums.name as albumname',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as albumcover'))
         ->join('artists','artists.id','songs.artist_id')
         ->join('genres','genres.id','songs.genre_id')
         ->join('albums','albums.id','songs.album_id')
@@ -85,7 +131,7 @@ class MobileController extends Controller
 
         $baseapiurl=asset('storage/');
 
-        $song['data'] = Playlistsong::select('songs.id',DB::raw('CONCAT("'.$baseapiurl.'/songmp3/",songs.file) as filemp3'),'songs.duration as duration','songs.title as songname',DB::raw('CONCAT("'.$baseapiurl.'/songcover/",songs.cover) as songcover'),'artists.name as artistname',DB::raw('CONCAT("'.$baseapiurl.'/artist/",artists.cover) as artistcover'),'genres.name as genrename',DB::raw('CONCAT("'.$baseapiurl.'/genre/",genres.cover) as genrecover'),'albums.name as albumname',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as albumcover'))
+        $song['playlist'] = Playlistsong::select('songs.id',DB::raw('CONCAT("'.$baseapiurl.'/songmp3/",songs.file) as filemp3'),'songs.duration as duration','songs.title as songname',DB::raw('CONCAT("'.$baseapiurl.'/songcover/",songs.cover) as songcover'),'artists.name as artistname',DB::raw('CONCAT("'.$baseapiurl.'/artist/",artists.cover) as artistcover'),'genres.name as genrename',DB::raw('CONCAT("'.$baseapiurl.'/genre/",genres.cover) as genrecover'),'albums.name as albumname',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as albumcover'))
 
         ->join('songs','songs.id','playlistsongs.song_id')
         ->join('artists','artists.id','songs.artist_id')
@@ -104,7 +150,7 @@ class MobileController extends Controller
 
         $baseapiurl=asset('storage/');
 
-        $song['data'] = Playlistsong::select('songs.id',DB::raw('CONCAT("'.$baseapiurl.'/songmp3/",songs.file) as filemp3'),'songs.duration as duration','songs.title as songname',DB::raw('CONCAT("'.$baseapiurl.'/songcover/",songs.cover) as songcover'),'artists.name as artistname',DB::raw('CONCAT("'.$baseapiurl.'/artist/",artists.cover) as artistcover'),'genres.name as genrename',DB::raw('CONCAT("'.$baseapiurl.'/genre/",genres.cover) as genrecover'),'albums.name as albumname',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as albumcover'))
+        $song['song'] = Playlistsong::select('songs.id',DB::raw('CONCAT("'.$baseapiurl.'/songmp3/",songs.file) as filemp3'),'songs.duration as duration','songs.title as songname',DB::raw('CONCAT("'.$baseapiurl.'/songcover/",songs.cover) as songcover'),'artists.name as artistname',DB::raw('CONCAT("'.$baseapiurl.'/artist/",artists.cover) as artistcover'),'genres.name as genrename',DB::raw('CONCAT("'.$baseapiurl.'/genre/",genres.cover) as genrecover'),'albums.name as albumname',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as albumcover'))
 
         ->join('songs','songs.id','playlistsongs.song_id')
         ->join('artists','artists.id','songs.artist_id')
@@ -122,7 +168,7 @@ class MobileController extends Controller
 
         $baseapiurl=asset('storage/');
 
-        $song['data'] = Playlistsong::select('songs.id',DB::raw('CONCAT("'.$baseapiurl.'/songmp3/",songs.file) as filemp3'),'songs.duration as duration','songs.title as songname',DB::raw('CONCAT("'.$baseapiurl.'/songcover/",songs.cover) as songcover'),'artists.name as artistname',DB::raw('CONCAT("'.$baseapiurl.'/artist/",artists.cover) as artistcover'),'genres.name as genrename',DB::raw('CONCAT("'.$baseapiurl.'/genre/",genres.cover) as genrecover'),'albums.name as albumname',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as albumcover'))
+        $song['song'] = Playlistsong::select('songs.id',DB::raw('CONCAT("'.$baseapiurl.'/songmp3/",songs.file) as filemp3'),'songs.duration as duration','songs.title as songname',DB::raw('CONCAT("'.$baseapiurl.'/songcover/",songs.cover) as songcover'),'artists.name as artistname',DB::raw('CONCAT("'.$baseapiurl.'/artist/",artists.cover) as artistcover'),'genres.name as genrename',DB::raw('CONCAT("'.$baseapiurl.'/genre/",genres.cover) as genrecover'),'albums.name as albumname',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as albumcover'))
 
         ->join('songs','songs.id','playlistsongs.song_id')
         ->join('artists','artists.id','songs.artist_id')
