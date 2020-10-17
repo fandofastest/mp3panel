@@ -98,6 +98,7 @@ class MobileController extends Controller
         ->join('genres','genres.id','songs.genre_id')
         ->join('albums','albums.id','songs.album_id')
         ->where('songs.title', 'like', "%{$title}%")
+        ->orWhere('artists.name', 'like', "%{$title}%")
         ->get();
 
         return response()->json($song);
