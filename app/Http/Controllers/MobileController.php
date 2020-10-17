@@ -97,7 +97,7 @@ class MobileController extends Controller
         ->join('artists','artists.id','songs.artist_id')
         ->join('genres','genres.id','songs.genre_id')
         ->join('albums','albums.id','songs.album_id')
-        ->where('songs.title', 'like', '"%{$title}%"')
+        ->where('songs.title', 'like', "%{$title}%")
         ->get();
 
         return response()->json($song);
