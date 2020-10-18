@@ -171,8 +171,8 @@ class SongController extends Controller
                 if ($jenis=='cover') {
 
                     $filecover=$request->file('file');
-                    $filename = preg_replace('/\s*/', '', $filename);
                     $filename=$request->title.time();
+                    $filename = preg_replace('/\s*/', '', $filename);
 
                     $pathcover = Storage::putFileAs('public/songcover', $filecover,$filename.'.'.$filecover->extension());
 
@@ -183,8 +183,8 @@ class SongController extends Controller
                 if ($jenis=='mp3') {
 
                     $filecover=$request->file('file');
-                    $filename = preg_replace('/\s*/', '', $filename);
                     $filename=$request->title.time();
+                    $filename = preg_replace('/\s*/', '', $filename);
                     $mp3file = new MP3File($filecover);//http://www.npr.org/rss/podcast.php?id=510282
                     $duration1 = $mp3file->getDurationEstimate();//(faster) for CBR only
                     $duration1= gmdate("i:s", $duration1);
@@ -198,8 +198,8 @@ class SongController extends Controller
                 if ($jenis=='lyric') {
 
                     $filecover=$request->file('file');
-                    $filename = preg_replace('/\s*/', '', $filename);
                     $filename=$request->title.time();
+                    $filename = preg_replace('/\s*/', '', $filename);
 
                     $pathcover = Storage::putFileAs('public/songlirik', $filecover,$filename.'.lrc');
 
