@@ -173,7 +173,7 @@ class SongController extends Controller
                     $filecover=$request->file('file');
                     $filename=$request->title.time();
                     $filename = preg_replace('/\s*/', '', $filename);
-
+                    $filename=strtolower($filename);
                     $pathcover = Storage::putFileAs('public/songcover', $filecover,$filename.'.'.$filecover->extension());
 
                     $song=Song::where('id',$request->id)
@@ -185,6 +185,7 @@ class SongController extends Controller
                     $filecover=$request->file('file');
                     $filename=$request->title.time();
                     $filename = preg_replace('/\s*/', '', $filename);
+                    $filename=strtolower($filename);
                     $mp3file = new MP3File($filecover);//http://www.npr.org/rss/podcast.php?id=510282
                     $duration1 = $mp3file->getDurationEstimate();//(faster) for CBR only
                     $duration1= gmdate("i:s", $duration1);
@@ -200,7 +201,7 @@ class SongController extends Controller
                     $filecover=$request->file('file');
                     $filename=$request->title.time();
                     $filename = preg_replace('/\s*/', '', $filename);
-
+                    $filename=strtolower($filename);
                     $pathcover = Storage::putFileAs('public/songlirik', $filecover,$filename.'.lrc');
 
                     $song=Song::where('id',$request->id)
