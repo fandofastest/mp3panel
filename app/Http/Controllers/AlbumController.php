@@ -31,17 +31,17 @@ class AlbumController extends Controller
         $genre=Genre::all();
 
         return view('album.index', compact('album','artist','genre'));
-        
+
     }
 
-    
+
     public function getDetailJson($album_id)
-    {   
+    {
         $genre['data'] = Album::select('albums.id as albumid','albums.name as albumname','albums.deskripsi as deskripsi','genres.name as genrename','genres.id as genreid')
         ->join('genres','genres.id','albums.genre_id')
         ->where('albums.id',$album_id)
         ->get();
-        
+
         return response()->json($genre);
 
     }
@@ -65,33 +65,35 @@ class AlbumController extends Controller
     public function store(Request $request)
     {
         if($request->hasfile('image'))  {
-            
-            $file=$request->file('image');    
-            $filename=$request->input('name');    
+
+            $file=$request->file('image');
+            $filename=$request->input('name');
             $filename = preg_replace('/\s*/', '', $filename);
-            // convert the string to all lowercase
-            $filename = strtolower($filename);
+
+
+
+
             $path = Storage::putFileAs('public/album', $request->file('image'),$filename.'.'.$file->extension());
-    
-                
+
+
                 $album = new Album();
                 $album->name=$filename;
-                $album->artist_id=$request->input('artist');   
-                $album->genre_id=$request->input('genre');   
-                $album->deskripsi=$request->input('deskripsi');   
+                $album->artist_id=$request->input('artist');
+                $album->genre_id=$request->input('genre');
+                $album->deskripsi=$request->input('deskripsi');
                 $album->cover=$filename.'.'.$file->extension();
                 $album->save();
                 Alert::success('Success', 'Album Tersimpan');
-    
-    
+
+
             }
             else {
                 Alert::error('Gagal', 'Album Gagal Tersimpan');
-    
+
             }
-            
+
             //
-    
+
              return back();
         //
     }
