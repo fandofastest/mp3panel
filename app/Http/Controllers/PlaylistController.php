@@ -24,25 +24,23 @@ class PlaylistController extends Controller
 
     }
 
-
-    
     public function listsongbyplaylist($playlist_id)
-        {   
-         
+        {
+
             $song['data'] = Playlistsong::select('songs.id','songs.file as filemp3','songs.duration as duration','songs.title as songname','songs.cover as songcover','artists.name as artistname','artists.cover as artistcover','playlistsongs.id as playlistid')
             ->join('songs','songs.id','playlistsongs.song_id')
             ->join('artists','artists.id','songs.artist_id')
             ->where('playlistsongs.playlist_id',$playlist_id)
             ->get();
-    
+
         return response()->json($song);
 
     }
 
-        
+
     public function listallsongbyplaylist($playlist_id)
-        {   
-         
+        {
+
             $song = Song::select('songs.id','songs.file as filemp3','songs.duration as duration','songs.title as songname','songs.cover as songcover','artists.name as artistname','artists.cover as artistcover')
             ->join('artists','artists.id','songs.artist_id')
 
@@ -51,57 +49,57 @@ class PlaylistController extends Controller
             foreach ($song as $s ) {
                 $newsong=Playlistsong::where('song_id',$s['id'])
                 ->where('playlist_id',$playlist_id)
-                ->get();    
+                ->get();
 
-                $s['status']=1;                   
-                if ($newsong->isEmpty()) {      
+                $s['status']=1;
+                if ($newsong->isEmpty()) {
 
                 $s['status']=0;
-                
+
 
                 # code...
-                }        
+                }
                     $newpl[]=$s;
                 # code...
             }
 
             $res['data']=$newpl;
 
-    
+
         return response()->json($res);
 
     }
     public function getPlaylist($song_id)
-        {   
-        // $newpl[];   
-        $playlist = Playlist::all();        
-        foreach ($playlist as $pl ) {              
+        {
+        // $newpl[];
+        $playlist = Playlist::all();
+        foreach ($playlist as $pl ) {
             $song=Playlistsong::where('song_id',$song_id)
                                 ->where('playlist_id',$pl->id)
-                                ->get();    
-              
-             $pl['status']=1;                   
-             if ($song->isEmpty()) {      
+                                ->get();
+
+             $pl['status']=1;
+             if ($song->isEmpty()) {
 
                 $pl['status']=0;
-                  
-                
+
+
                  # code...
-             }        
+             }
              $newpl[]=$pl;
 
             # code...
         }
-        
+
         $res['playlist']=$newpl;
-        
-    
+
+
         return response()->json($res);
 
     }
 
     public function addtoplaylist($playlist_id,$song_id)
-    {   
+    {
         $check=Playlistsong::where('song_id',$song_id)->where('playlist_id',$playlist_id)->get();
         $playlist=new Playlistsong();
 
@@ -109,24 +107,24 @@ class PlaylistController extends Controller
 
             $playlist->song_id=$song_id;
             $playlist->playlist_id=$playlist_id;
-            $playlist->save();   
+            $playlist->save();
             # code...
         }
         else{
             $playlist->status="exist";
         }
         $res['response']=$playlist;
-          
+
         return response()->json($res);
 
     }
 
     public function rmplaylist($playlist_id,$song_id)
-    {   
+    {
         $check=Playlistsong::where('song_id',$song_id)->where('playlist_id',$playlist_id)->delete();
-      
+
         $res['response']="success";
-          
+
         return response()->json($res);
 
     }
@@ -151,30 +149,30 @@ class PlaylistController extends Controller
     {
         //
         if($request->hasfile('image'))  {
-            
-            $file=$request->file('image');    
-            $filename=$request->input('name');    
+
+            $file=$request->file('image');
+            $filename=$request->input('name');
             $filename = preg_replace('/\s*/', '', $filename);
             // convert the string to all lowercase
             $filename = strtolower($filename);
             $path = Storage::putFileAs('public/playlist', $request->file('image'),$filename.'.'.$file->extension());
-    
-                
+
+
                 $playlist = new Playlist();
                 $playlist->name=$request->input('name');
                 $playlist->cover=$filename.'.'.$file->extension();
                 $playlist->save();
                 Alert::success('Success', 'Playlist Tersimpan');
-    
-    
+
+
             }
             else {
                 Alert::error('Gagal', 'Genre Playlist Tersimpan');
-    
+
             }
-            
+
             //
-    
+
              return back();
     }
 
