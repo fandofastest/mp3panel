@@ -77,7 +77,7 @@ class AlbumController extends Controller
 
 
                 $album = new Album();
-                $album->name=$filename;
+                $album->name=$request->input('name');
                 $album->artist_id=$request->input('artist');
                 $album->genre_id=$request->input('genre');
                 $album->deskripsi=$request->input('deskripsi');
