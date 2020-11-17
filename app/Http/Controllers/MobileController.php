@@ -57,7 +57,7 @@ class MobileController extends Controller
 
         $baseapiurl=asset('storage/');
         $playlist['playlist'] = Playlist::select('id','name',DB::raw('CONCAT("'.$baseapiurl.'/playlist/",cover) as cover'))
-        ->where('playlist_id', '!=' , 1)
+        ->where('id', '!=' , 1)
         ->get();
 
         // $album=Album::all();
