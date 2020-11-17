@@ -94,7 +94,7 @@ class SongController extends Controller
         $duration1= gmdate("i:s", $duration1);
         //  dd($duration1);
 
-        $filename=$request->input('name');
+        $filename=$title;
         $filename = preg_replace('/\s*/', '', $filename);
         // convert the string to all lowercase
         $filename = strtolower($filename);
