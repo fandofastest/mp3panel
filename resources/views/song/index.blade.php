@@ -206,9 +206,9 @@
                             @csrf
 
 
-                            <div class="form-group">
+                            {{-- <div class="form-group">
                              <input class="form-control" name="name" type="text" placeholder="Song Title" id="example-text-input" required>
-                            </div>
+                            </div> --}}
 
                                  <div class="form-group">
                                 <select  class="form-control" name="artist" id="artist"  required >

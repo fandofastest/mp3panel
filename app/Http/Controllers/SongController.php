@@ -85,7 +85,8 @@ class SongController extends Controller
     public function store(Request $request)
     {
         if($request->hasfile('mp3'))  {
-         $title =$request->input('name');
+         $title =pathinfo($request->file('mp3')->getClientOriginalName(),PATHINFO_FILENAME);
+        //  dd($title);
         $filemp3=$request->file('mp3');
 
         $mp3file = new MP3File($filemp3);//http://www.npr.org/rss/podcast.php?id=510282

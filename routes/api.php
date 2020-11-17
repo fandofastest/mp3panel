@@ -37,6 +37,7 @@ Route::get('mobile/', [MobileController::class, 'index'])->name('index');
 Route::get('mobile/find/{title}/', [MobileController::class, 'getSongByTitle'])->name('getSongByTitle');
 Route::get('mobile/getallalbum/', [MobileController::class, 'getAllAlbum'])->name('getAllAlbum');
 Route::get('mobile/getallplaylist/', [MobileController::class, 'getAllPlaylist'])->name('getAllPlaylist');
+Route::get('mobile/gettopchart/', [MobileController::class, 'getTopChart'])->name('getTopChart');
 
 Route::get('mobile/getallartist/', [MobileController::class, 'getAllArtist'])->name('getAllArtist');
 Route::get('mobile/getallgenre/', [MobileController::class, 'getAllGenre'])->name('getAllGenre');
