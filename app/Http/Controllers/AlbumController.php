@@ -82,6 +82,7 @@ class AlbumController extends Controller
                 $album->genre_id=$request->input('genre');
                 $album->deskripsi=$request->input('deskripsi');
                 $album->cover=$filename.'.'.$file->extension();
+                $album->year=$request->input('year');
                 $album->save();
                 Alert::success('Success', 'Album Tersimpan');
 

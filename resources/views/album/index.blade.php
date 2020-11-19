@@ -195,7 +195,15 @@
                      
                         <form method="POST" action="{{ route('album.store') }}" enctype="multipart/form-data" >
                             @csrf
+                            <div class="form-group">
+                             <select class="form-control" name="year" type="text" placeholder="Year" id="example-text-input" required>
+                                 @for ($i = 2020; $i > 2010; $i--)
+                             <option value="{{$i}}">{{$i}}</option>
 
+                                 @endfor
+
+                             </select>
+                            </div>
                             
                             <div class="form-group">
                              <input class="form-control" name="name" type="text" placeholder="Album Name" id="example-text-input" required>
