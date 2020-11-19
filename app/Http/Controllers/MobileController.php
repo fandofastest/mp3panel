@@ -41,7 +41,7 @@ class MobileController extends Controller
     {
 
         $baseapiurl=asset('storage/');
-        $album['album'] = Album::select('.albums.id as id','songs.year','albums.name as name',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as cover'),'albums.deskripsi as deskripsi','genres.name as genre','artists.name as artist')
+        $album['album'] = Album::select('.albums.id as id','year','albums.name as name',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as cover'),'albums.deskripsi as deskripsi','genres.name as genre','artists.name as artist')
         ->join('genres','genres.id','albums.genre_id')
         ->join('artists','artists.id','albums.artist_id')
         ->get();
