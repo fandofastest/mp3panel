@@ -117,7 +117,6 @@ class SongController extends Controller
             $song->cover=$filename.'.'.$filecover->extension();
             $song->file=$filename.'.'.$filemp3->extension();
             $song->duration=$duration1;
-            $song->year=$request->input('year');
             $song->save();
             Alert::success('Success', 'Album Tersimpan');
 
