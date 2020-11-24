@@ -35,6 +35,9 @@ Route::get('listallsongbyplaylist/{playlist_id}', [PlaylistController::class, 'l
 
 Route::get('mobile/', [MobileController::class, 'index'])->name('index');
 Route::get('mobile/find/{title}/', [MobileController::class, 'getSongByTitle'])->name('getSongByTitle');
+
+Route::get('mobile/play/{idsong}', [MobileController::class, 'playsong'])->name('playsong');
+
 Route::get('mobile/getallalbum/', [MobileController::class, 'getAllAlbum'])->name('getAllAlbum');
 Route::get('mobile/getallplaylist/', [MobileController::class, 'getAllPlaylist'])->name('getAllPlaylist');
 Route::get('mobile/gettopchart/', [MobileController::class, 'getTopChart'])->name('getTopChart');
