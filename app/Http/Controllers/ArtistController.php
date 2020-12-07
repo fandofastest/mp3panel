@@ -59,6 +59,7 @@ class ArtistController extends Controller
             
             $file=$request->file('image');    
             $filename=$request->input('name');    
+            $title=$request->input('name');
             $filename = preg_replace('/\s*/', '', $filename);
             // convert the string to all lowercase
             $filename = strtolower($filename);
@@ -66,7 +67,7 @@ class ArtistController extends Controller
     
                 
                 $artist = new Artist();
-                $artist->name=$filename;
+                $artist->name=$title;
                 $artist->cover=$filename.'.'.$file->extension();
                 $artist->save();
                 Alert::success('Success', 'Artist Tersimpan');
