@@ -25,7 +25,7 @@ class SongController extends Controller
                         ->join('artists','artists.id','songs.artist_id')
                         ->join('genres','genres.id','songs.genre_id')
                         ->join('albums','albums.id','songs.album_id')
-                        ->paginate(1);
+                        ->paginate(10);
 
 
 
