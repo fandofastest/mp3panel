@@ -168,9 +168,13 @@
 
                                         </tbody>
                                     </table>
+                                   
+
                                 </div>
 
                                 </div>
+
+                                {{ $song->links() }}
 
                     </div>
                 </div>

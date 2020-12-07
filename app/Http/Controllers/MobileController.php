@@ -23,7 +23,6 @@ class MobileController extends Controller
     public function index()
     {
          $baseapiurl=asset('storage/');
-
         $song['song'] = Song::select('songs.id',DB::raw('CONCAT("'.$baseapiurl.'/songmp3/",songs.file) as filemp3'),DB::raw('CONCAT("'.$baseapiurl.'/songlirik/",songs.lyric) as lyric'),'songs.duration as duration','songs.title as songname',DB::raw('CONCAT("'.$baseapiurl.'/songcover/",songs.cover) as songcover'),'artists.name as artistname',DB::raw('CONCAT("'.$baseapiurl.'/artist/",artists.cover) as artistcover'),'genres.name as genrename',DB::raw('CONCAT("'.$baseapiurl.'/genre/",genres.cover) as genrecover'),'albums.name as albumname',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as albumcover'))
         ->join('artists','artists.id','songs.artist_id')
         ->join('genres','genres.id','songs.genre_id')
@@ -41,7 +40,7 @@ class MobileController extends Controller
     {
 
         $baseapiurl=asset('storage/');
-        $album['album'] = Album::select('.albums.id as id','albums.name as name',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as cover'),'albums.deskripsi as deskripsi','genres.name as genre','artists.name as artist')
+        $album['album'] = Album::select('.albums.id as id','year','albums.name as name',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as cover'),'albums.deskripsi as deskripsi','genres.name as genre','artists.name as artist')
         ->join('genres','genres.id','albums.genre_id')
         ->join('artists','artists.id','albums.artist_id')
         ->get();
