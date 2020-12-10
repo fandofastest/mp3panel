@@ -48,7 +48,7 @@ class MobileController extends Controller
         $new['album']=[];
         foreach ($album as $data ) {
          
-                $data->totalsong=$this->countSongbyalbumid($data->id);
+                $data->totalsong=$this->countSongbyalbumid($data['id']);
                 array_push($new['album'],$data);
 
             # code...
