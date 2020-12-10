@@ -25,7 +25,10 @@ class SongController extends Controller
                         ->join('artists','artists.id','songs.artist_id')
                         ->join('genres','genres.id','songs.genre_id')
                         ->join('albums','albums.id','songs.album_id')
-                        ->get();
+                        ->paginate(10);
+
+
+
         // dd($song);
         // $genre=Genre::all();
 
