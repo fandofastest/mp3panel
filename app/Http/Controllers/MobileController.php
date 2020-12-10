@@ -47,8 +47,6 @@ class MobileController extends Controller
         ->get();
 
 
-            
-
         $new['album']=[];
         foreach ($album as $data ) {
             dd($data);
