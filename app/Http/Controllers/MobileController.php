@@ -47,10 +47,11 @@ class MobileController extends Controller
         ->get();
 
 
-
+            
 
         $new['album']=[];
         foreach ($album as $data ) {
+            dd($data);
                 $data->totalsong=$this->countSongbyalbumid($data->id);
                 array_push($new['album'],$data);
 
