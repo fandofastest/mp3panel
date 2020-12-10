@@ -46,8 +46,17 @@ class MobileController extends Controller
         ->join('artists','artists.id','albums.artist_id')
         ->get();
 
+
+        $new['album']=[];
+        foreach ($album as $data ) {
+                $data->totalsong=$this->countSongbyalbumid($data->id);
+                array_push($new['album'],$data);
+
+            # code...
+        }
+
         // $album=Album::all();
-        return response()->json($album);
+        return response()->json($new);
 
         //
     }
@@ -173,6 +182,18 @@ class MobileController extends Controller
         return count($song);
 
     }
+
+
+    public function countSongbyalbumid(String $id){
+
+        $song = Song::select('*')
+        ->join('albums','albums.id','songs.album_id')
+        ->where('songs.album_id',$id)
+        ->get();
+
+        return count($song);
+
+    
 
     public function getTopChart()
     {
