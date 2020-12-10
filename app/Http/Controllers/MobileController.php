@@ -47,11 +47,6 @@ class MobileController extends Controller
         ->get();
 
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> fb056fac18079a341f925508b6ec6279b30760fa
         $new['album']=[];
         foreach ($album as $data ) {
                 $data->totalsong=$this->countSongbyalbumid($data->id);
@@ -59,10 +54,7 @@ class MobileController extends Controller
 
             # code...
         }
-<<<<<<< HEAD
 
-=======
->>>>>>> fb056fac18079a341f925508b6ec6279b30760fa
         // $album=Album::all();
         return response()->json($new);
 
