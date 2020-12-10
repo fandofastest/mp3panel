@@ -20,7 +20,7 @@ class AlbumController extends Controller
     {
         //
         // $datakehadiran      =   Kehadiran::join('users','users.username','kehadirans.npm')->where('meeting_id',$idmeeting)->get();
-        $album = Album::select('albums.id','albums.name as albumname','albums.cover as albumcover','albums.deskripsi as deskripsi','artists.name as artistname','artists.cover as artistcover','genres.name as genrename','genres.cover as genrecover')
+        $album = Album::select('albums.id','year','albums.name as albumname','albums.cover as albumcover','albums.deskripsi as deskripsi','artists.name as artistname','artists.cover as artistcover','genres.name as genrename','genres.cover as genrecover')
                         ->join('artists','artists.id','albums.artist_id')
                         ->join('genres','genres.id','albums.genre_id')
                         ->get();

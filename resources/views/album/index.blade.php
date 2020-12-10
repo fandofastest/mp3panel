@@ -2,7 +2,7 @@
 
 @section('content')
     @include('layouts.headers.cards')
-    
+
     <div class="container-fluid mt--7">
         <div class="row">
             <div class="col-xl-12 mb-5 mb-xl-0">
@@ -18,20 +18,20 @@
                                     <li class="nav-item mr-2 mr-md-0" data-toggle="chart"  >
                                         <a type="button" href="#" class="nav-link py-2 px-3 active"  data-toggle="modal" data-target="#modaladdalbum">
                                             <span class="d-none d-md-block">Add Album</span>
-                                            
+
                                         </a>
                                     </li>
-                                 
+
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div class="card-body">
                         <!-- Chart -->
-                       
+
                             <!-- Chart wrapper -->
                             <div class="table-responsive">
-    
+
 
 
 
@@ -55,35 +55,35 @@
                                                 <th scope="col" class="sort" data-sort="budget">Artist Name</th>
                                                 <th scope="col" class="sort" data-sort="budget">Genre Name</th>
                                                 <th scope="col" class="sort" data-sort="budget">Deskripsi</th>
-                                                
+
                                             </tr>
                                         </thead>
                                         <tbody class="list">
                                             @foreach ($album as $item)
-                                                
-                                           
+
+
 
                                             <tr>
                                                 <td scope="row">
                                                     <div class="media align-items-center">
-                                                        
-                                                   
+
+
                                                         <div class="media-body">
                                                         <span class="name mb-0 text-sm">{{$item['id']}}</span>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                
-                                                
+
+
                                                 <td scope="row">
                                                     <div class="media align-items-center">
-                                                        
+
                                                         <a href="#" class="avatar rounded-circle mr-3">
-                                                          
-                                                            
+
+
                                                         <img alt="Image placeholder" src="{{ asset('storage/album/'.$item['albumcover'])}}">
-                                                            
-                                                          
+
+
                                                         </a>
                                                         <div class="media-body">
                                                         <span class="name mb-0 text-sm">{{$item['albumname']}}</span>
@@ -93,13 +93,13 @@
 
                                                 <td scope="row">
                                                     <div class="media align-items-center">
-                                                        
+
                                                         <a href="#" class="avatar rounded-circle mr-3">
-                                                          
-                                                            
+
+
                                                         <img alt="Image placeholder" src="{{ asset('storage/artist/'.$item['artistcover'])}}">
-                                                            
-                                                          
+
+
                                                         </a>
                                                         <div class="media-body">
                                                         <span class="name mb-0 text-sm">{{$item['artistname']}}</span>
@@ -109,71 +109,71 @@
 
                                                 <td scope="row">
                                                     <div class="media align-items-center">
-                                                        
+
                                                         <a href="#" class="avatar rounded-circle mr-3">
-                                                          
-                                                            
+
+
                                                         <img alt="Image placeholder" src="{{ asset('storage/genre/'.$item['genrecover'])}}">
-                                                            
-                                                          
+
+
                                                         </a>
                                                         <div class="media-body">
                                                         <span class="name mb-0 text-sm">{{$item['genrename']}}</span>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                
+
                                                 <td scope="row">
                                                     <div class="media align-items-center">
-                                                        
-                                                   
+
+
                                                         <div class="media-body">
                                                         <span class="name mb-0 text-sm">{{ Str::limit($item['deskripsi'],10)}}</span>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                
-                                            
+
+
                                                 <td class="text-right">
-                                                    
+
                                                     <form action="{{ route('album.destroy',$item->id) }}" method="POST">
-   
+
                                                         {{-- <a class="btn btn-info" href="{{ route('artist.show',$item->id) }}">Show</a> --}}
-                                        
+
                                                         {{-- <a class="btn btn-primary" href="{{ route('artist.edit',$item->id) }}">Edit</a> --}}
-                                       
+
                                                         @csrf
                                                         @method('DELETE')
-                                          
+
                                                         <button type="submit" class="btn btn-danger">Delete</button>
                                                     </form>
 
                                                 </td>
                                             </tr>
                                             @endforeach
-                                            
-                                            
-                                           
-                                            
-                                           
-                                            
+
+
+
+
+
+
                                         </tbody>
                                     </table>
                                 </div>
-                                
+
                                 </div>
-                           
+
                     </div>
                 </div>
             </div>
-   
+
         </div>
         <div class="row mt-5">
             <div class="col-xl-8 mb-5 mb-xl-0">
-                
+
             </div>
             <div class="col-xl-4">
-                
+
             </div>
         </div>
 
@@ -183,26 +183,40 @@
                     <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="modaladdalbum">Add New Album</h5>
-                       
 
-                        
+
+
 
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                     
+
                         <form method="POST" action="{{ route('album.store') }}" enctype="multipart/form-data" >
                             @csrf
+<<<<<<< HEAD
+
+
+=======
                             <div class="form-group">
                              <input class="form-control" name="year" type="text" placeholder="Year" id="example-text-input" required>
                            
                             </div>
                             
+>>>>>>> ca521347865964bd708db7aa1401a278642dc226
                             <div class="form-group">
                              <input class="form-control" name="name" type="text" placeholder="Album Name" id="example-text-input" required>
                             </div>
+                            <div class="form-group">
+                            <select class="form-control" name="year" type="text" placeholder="Year" id="example-text-input" required>
+                                @for ($i = 2020; $i > 2010; $i--)
+                            <option value="{{$i}}">{{$i}}</option>
+
+                                @endfor
+
+                            </select>
+                        </div>
 
                             <div class="form-group">
                                 <select  class="form-control" name="artist" id="artist" data-toggle="select" title="Simple select" data-live-search="true" data-live-search-placeholder="Search ..." required >
@@ -210,9 +224,9 @@
                                   @foreach ($artist as $item)
                                 <option value="{{$item->id}}">{{$item->name}}</option>
                                   @endforeach
-                            
+
                                 </select>
-                              </div>   
+                              </div>
 
                               <div class="form-group">
                                 <select  class="form-control" name="genre" id="genre" data-toggle="select" title="Simple select" data-live-search="true" data-live-search-placeholder="Search ..." required >
@@ -220,9 +234,9 @@
                                   @foreach ($genre as $item)
                                 <option value="{{$item->id}}">{{$item->name}}</option>
                                   @endforeach
-                            
+
                                 </select>
-                              </div>   
+                              </div>
 
 
                             <div class="custom-file">
@@ -232,8 +246,8 @@
                             <div class="form-group">
                                 <textarea class="form-control"  placeholder="Deskripsi" id="exampleFormControlTextarea1" rows="3" name="deskripsi"></textarea>
                             </div>
-                            
-                       
+
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -241,7 +255,7 @@
                     </form>
                     </div>
                     </div>
-                    
+
                 </div>
                 </div>
 
