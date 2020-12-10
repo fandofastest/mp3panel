@@ -47,6 +47,8 @@ class MobileController extends Controller
         ->get();
 
 
+
+
         $new['album']=[];
         foreach ($album as $data ) {
                 $data->totalsong=$this->countSongbyalbumid($data->id);
@@ -54,7 +56,6 @@ class MobileController extends Controller
 
             # code...
         }
-
         // $album=Album::all();
         return response()->json($new);
 
@@ -193,7 +194,7 @@ class MobileController extends Controller
 
         return count($song);
 
-    
+    }
 
     public function getTopChart()
     {
