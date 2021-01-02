@@ -19,7 +19,6 @@ class CreateAlbumsTable extends Migration
             $table->string('artist_id');
             $table->string('genre_id');
             $table->string('cover');
-            $table->string('year');
             $table->text('deskripsi');  
             $table->string('year');
             $table->timestamps();
