@@ -21,7 +21,7 @@ class CreateAlbumsTable extends Migration
             $table->string('cover');
             $table->text('deskripsi');  
             $table->string('year');
-            $table->bigInteger('plays');
+            $table->bigInteger('plays')->default(0);
             $table->timestamps();
         });
     }
