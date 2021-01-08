@@ -195,16 +195,11 @@
 
                         <form method="POST" action="{{ route('album.store') }}" enctype="multipart/form-data" >
                             @csrf
-<<<<<<< HEAD
-
-
-=======
                             <div class="form-group">
                              <input class="form-control" name="year" type="text" placeholder="Year" id="example-text-input" required>
                            
                             </div>
                             
->>>>>>> ca521347865964bd708db7aa1401a278642dc226
                             <div class="form-group">
                              <input class="form-control" name="name" type="text" placeholder="Album Name" id="example-text-input" required>
                             </div>
