@@ -38,13 +38,13 @@ Route::get('mobile/find/{title}/', [MobileController::class, 'getSongByTitle'])-
 
 Route::get('mobile/play/{idsong}', [MobileController::class, 'playsong'])->name('playsong');
 
-Route::get('mobile/getallalbum/', [MobileController::class, 'getAllAlbum'])->name('getAllAlbum');
-Route::get('mobile/getallplaylist/', [MobileController::class, 'getAllPlaylist'])->name('getAllPlaylist');
-Route::get('mobile/getplaylistbyname/', [MobileController::class, 'getPlaylistByName'])->name('getPlaylistByName');
-Route::get('mobile/gettopchart/', [MobileController::class, 'getTopChart'])->name('getTopChart');
+Route::get('mobile/getallalbum/{limit?}', [MobileController::class, 'getAllAlbum'])->name('getAllAlbum');
+Route::get('mobile/getallplaylist/{limit?}', [MobileController::class, 'getAllPlaylist'])->name('getAllPlaylist');
+Route::get('mobile/getplaylistbyname/{name}', [MobileController::class, 'getPlaylistByName'])->name('getPlaylistByName');
+Route::get('mobile/gettopchart/{limit?}', [MobileController::class, 'getTopChart'])->name('getTopChart');
 
-Route::get('mobile/getallartist/', [MobileController::class, 'getAllArtist'])->name('getAllArtist');
-Route::get('mobile/getallgenre/', [MobileController::class, 'getAllGenre'])->name('getAllGenre');
+Route::get('mobile/getallartist/{limit?}', [MobileController::class, 'getAllArtist'])->name('getAllArtist');
+Route::get('mobile/getallgenre/{limit?}', [MobileController::class, 'getAllGenre'])->name('getAllGenre');
 
 Route::get('mobile/get/{idsong}/{isLocal}/', [MobileController::class, 'getSongById'])->name('getSongById');
 Route::get('mobile/playlistsong/{playlistid}/', [MobileController::class, 'getSongByPlaylist'])->name('getSongByPlaylist');

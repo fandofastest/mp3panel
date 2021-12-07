@@ -37,13 +37,14 @@ class MobileController extends Controller
     }
 
 
-    public function getAllAlbum()
+    public function getAllAlbum($limit=25)
     {
 
         $baseapiurl=asset('storage/');
         $album = Album::select('.albums.id as id','year','albums.name as name',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as cover'),'albums.deskripsi as deskripsi','genres.name as genre','artists.name as artist','albums.plays',DB::raw('CONCAT("'.$baseapiurl.'/artist/",artists.cover) as artistcover'))
         ->join('genres','genres.id','albums.genre_id')
         ->join('artists','artists.id','albums.artist_id')
+        ->limit($limit)
         ->get();
         $new['album']=[];
         foreach ($album as $data ) {
@@ -60,12 +61,13 @@ class MobileController extends Controller
         //
     }
 
-    public function getAllPlaylist()
+    public function getAllPlaylist($limit=25)
     {
 
         $baseapiurl=asset('storage/');
         $playlist = Playlist::select('id','name',DB::raw('CONCAT("'.$baseapiurl.'/playlist/",cover) as cover'))
         ->where('id', '!=' , 1)
+        ->limit($limit)
         ->get();
         $new['playlist']=[];
         foreach ($playlist as $data ) {
@@ -108,20 +110,22 @@ class MobileController extends Controller
     }
 
 
-    public function getAllArtist()
+    public function getAllArtist($limit=25)
     {
         $baseapiurl=asset('storage/');
         $artist['artist'] = Artist::select('id','name',DB::raw('CONCAT("'.$baseapiurl.'/artist/",cover) as cover'))
+        ->limit(5)
         ->get();
         // dd('ssss');
         return response()->json($artist);
         //
     }
-    public function getAllGenre()
+    public function getAllGenre($limit=25)
     {
 
         $baseapiurl=asset('storage/');
         $genre['genre'] = Genre::select('id','name',DB::raw('CONCAT("'.$baseapiurl.'/genre/",cover) as cover'))
+        ->limit(5)
         ->get();
 
         // $album=Album::all();
@@ -220,7 +224,7 @@ class MobileController extends Controller
 
     }
 
-    public function getTopChart()
+    public function getTopChart($limit=25)
     {
 
         $baseapiurl=asset('storage/');
@@ -232,6 +236,7 @@ class MobileController extends Controller
         ->join('albums','albums.id','songs.album_id')
         ->join('genres','genres.id','songs.genre_id')
         ->where('playlistsongs.playlist_id',1)
+        ->limit(5)
         ->get();
 
         return response()->json($song);
