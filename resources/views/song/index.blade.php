@@ -171,10 +171,10 @@
 
 
                                 </div>
+                                {{ $song->links() }}
 
                                 </div>
 
-                                {{ $song->links() }}
 
                     </div>
                 </div>
