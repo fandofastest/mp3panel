@@ -168,7 +168,7 @@
 
                                         </tbody>
                                     </table>
-                                   
+
 
                                 </div>
 
@@ -210,7 +210,7 @@
                             @csrf
 
 
-                          
+
 
                                  <div class="form-group">
                                 <select  class="form-control" name="artist" id="artist"  required >
@@ -253,6 +253,10 @@
                             <div class="custom-file">
                                 <input name="lirik" type="file" class="custom-file-input" id="selectlyric" lang="en" required>
                                 <label class="custom-file-label" id="labellyric" for="customFileLang">Select Lyric</label>
+                            </div>
+
+                            <div class="form-group">
+                                <input class="form-control" name="initplay" type="text"  id="initplay" lang="en" required value="0">
                             </div>
 
 

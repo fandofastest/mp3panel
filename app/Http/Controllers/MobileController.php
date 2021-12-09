@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Song;
+use App\Models\Plays;
 use App\Models\Playlist;
 use App\Models\Album;
 use App\Models\Genre;
@@ -45,6 +46,7 @@ class MobileController extends Controller
         ->join('genres','genres.id','albums.genre_id')
         ->join('artists','artists.id','albums.artist_id')
         ->limit($limit)
+        ->orderBy('plays', 'desc')
         ->get();
         $new['album']=[];
         foreach ($album as $data ) {
@@ -60,6 +62,10 @@ class MobileController extends Controller
 
         //
     }
+
+
+
+
 
     public function getAllPlaylist($limit=25)
     {
@@ -283,9 +289,10 @@ class MobileController extends Controller
         $song->increment('plays');
         $album=Album::where('id',$song->album_id)->get()->first();
         $album->increment('plays');
-         $url= asset('storage/songmp3/')."/".$song->file;
-
-
+        $url= asset('storage/songmp3/')."/".$song->file;
+        $playsong=new Plays();
+        $playsong->songid=$idsong;
+        $playsong->save();
          return redirect($url);
 
     }

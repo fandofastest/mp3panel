@@ -120,8 +120,12 @@ class SongController extends Controller
             $song->cover=$filename.'.'.$filecover->extension();
             $song->file=$filename.'.'.$filemp3->extension();
             $song->duration=$duration1;
-            $song->year="0";
-            $song->plays=0;
+            $song->plays=$request->input('initplay');
+            $album=Album::where('id',$request->input('album'));
+            $album->increment('plays',$request->input('initplay'));
+
+
+
             $song->save();
             Alert::success('Success', 'Album Tersimpan');
 

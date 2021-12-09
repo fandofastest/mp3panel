@@ -23,7 +23,6 @@ class CreateSongsTable extends Migration
             $table->string('cover');
             $table->string('file');
             $table->string('duration');
-            $table->string('year');
             $table->biginteger('plays')->default(0);
             $table->timestamps();
         });

@@ -50,6 +50,7 @@ Route::get('mobile/get/{idsong}/{isLocal}/', [MobileController::class, 'getSongB
 Route::get('mobile/playlistsong/{playlistid}/', [MobileController::class, 'getSongByPlaylist'])->name('getSongByPlaylist');
 Route::get('mobile/genre/{genrename}/', [MobileController::class, 'getSongByGenre'])->name('getSongByGenre');
 Route::get('mobile/album/{albumid}/', [MobileController::class, 'getSongByAlbum'])->name('getSongByAlbum');
+Route::get('mobile/gettopalbum/', [MobileController::class, 'getTopAlbum'])->name('getTopAlbum');
 
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
