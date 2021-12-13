@@ -146,6 +146,7 @@ class MobileController extends Controller
         }
         // dd($new['playlist']);
 
+        dd($new['result']);
 
 
 
@@ -237,7 +238,6 @@ class MobileController extends Controller
         ->where('playlistsongs.playlist_id',$playlistid)
         ->get();
 
-          dd($song['playlist'])  ;
 
         return response()->json($song);
 
