@@ -148,7 +148,7 @@ class MobileController extends Controller
          $song=$this->getSongByPlaylist( $new['playlist']['id']);
          array_push($new['songs'],$song);
 
-         $new['playlist'];
+         dd($new['playlist']);
 
         // $album=Album::all();
         return response()->json($new);
