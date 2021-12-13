@@ -140,7 +140,7 @@ class MobileController extends Controller
         foreach ($playlist as $data ) {
                 $data->totalsong=$this->countSong($data->id);
                 $data->songs=$this->getSongByPlaylist($data->id);
-                array_push($new['songs'],$data);
+                array_push($new['result'],$data);
 
             # code...
         }
