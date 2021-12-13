@@ -140,13 +140,13 @@ class MobileController extends Controller
         $new['songs']=[];
         foreach ($playlist as $data ) {
                 $data->totalsong=$this->countSong($data->id);
+                $data->songs=$this->getSongByPlaylist($data->id);
                 array_push($new['playlist'],$data);
 
             # code...
         }
-        dd($new['playlist']);
-         $song=$this->getSongByPlaylist( $new['playlist']['id']);
-         array_push($new['songs'],$song);
+        // dd($new['playlist']);
+
 
 
 
