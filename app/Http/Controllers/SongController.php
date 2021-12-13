@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use Alert;
 use App\Models\Song;
+use App\Models\Album;
 use App\Models\MP3File;
 use App\Models\Artist;
 use Illuminate\Http\Request;
