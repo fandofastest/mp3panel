@@ -145,7 +145,7 @@ class MobileController extends Controller
             # code...
         }
 
-         $song=$this->getSongByPlaylist( $new['playlist']->id);
+         $song=$this->getSongByPlaylist( $new['playlist']['id']);
          array_push($new['songs'],$song);
 
         // $album=Album::all();
