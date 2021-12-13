@@ -146,7 +146,7 @@ class MobileController extends Controller
         }
         // dd($new['playlist']);
 
-        dd($new['result']);
+        // dd($new['result']);
 
 
 
