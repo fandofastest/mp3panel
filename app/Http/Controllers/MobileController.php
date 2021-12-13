@@ -136,12 +136,11 @@ class MobileController extends Controller
 
         ->where('name','=',$name)
         ->get();
-        $new['playlist']=[];
-        $new['songs']=[];
+        $new['results']=[];
         foreach ($playlist as $data ) {
                 $data->totalsong=$this->countSong($data->id);
                 $data->songs=$this->getSongByPlaylist($data->id);
-                array_push($new['playlist'],$data);
+                array_push($new['results'],$data);
 
             # code...
         }
