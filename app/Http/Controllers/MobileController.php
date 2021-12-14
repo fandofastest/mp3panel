@@ -63,7 +63,7 @@ class MobileController extends Controller
             ->join('artists','artists.id','songs.artist_id')
             ->join('genres','genres.id','songs.genre_id')
             ->join('albums','albums.id','songs.album_id')
-            ->where('id',$mysong->songid)->first();
+            ->where('songs.id',$mysong->songid)->first();
             $song->plays=$mysong->total;
             array_push($new['topweekley'],$song);
 
