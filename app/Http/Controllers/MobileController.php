@@ -335,10 +335,8 @@ class MobileController extends Controller
 
     public function getTopAlbum(){
 
-
         $baseapiurl=asset('storage/');
-        $albumall = Album::all()
-        ->orderByDesc('plays');
+        $albumall = Album::orderByDesc('plays')->first();
 
         dd($albumall);
 
