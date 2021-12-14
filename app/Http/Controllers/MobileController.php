@@ -333,7 +333,7 @@ class MobileController extends Controller
     }
 
 
-    public function getTopAlbum(){
+    public function getTopAlbum($limit=25){
 
 
         $baseapiurl=asset('storage/');
@@ -346,7 +346,9 @@ class MobileController extends Controller
             ->join('artists','artists.id','songs.artist_id')
             ->join('genres','genres.id','songs.genre_id')
             ->join('albums','albums.id','songs.album_id')
-            ->where('albums.id',$albumall->id)->get();
+            ->where('albums.id',$albumall->id)
+            ->limit($limit)
+            ->get();
             // $song->plays=$mysong->total;
 
             # code...
