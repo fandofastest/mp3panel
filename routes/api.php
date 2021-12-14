@@ -51,7 +51,7 @@ Route::get('mobile/playlistsong/{playlistid}/', [MobileController::class, 'getSo
 Route::get('mobile/genre/{genrename}/', [MobileController::class, 'getSongByGenre'])->name('getSongByGenre');
 Route::get('mobile/album/{albumid}/', [MobileController::class, 'getSongByAlbum'])->name('getSongByAlbum');
 Route::get('mobile/gettopalbum/', [MobileController::class, 'getTopAlbum'])->name('getTopAlbum');
-Route::get('mobile/weekly/', [MobileController::class, 'weekly'])->name('weekly');
+Route::get('mobile/weekly/{limit?}', [MobileController::class, 'weekly'])->name('weekly');
 
 
 

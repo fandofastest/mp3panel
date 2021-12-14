@@ -37,7 +37,7 @@ class MobileController extends Controller
         //
     }
 
-    public function weekly()
+    public function weekly($limit=25)
     {
          $baseapiurl=asset('storage/');
 
@@ -53,6 +53,7 @@ class MobileController extends Controller
                 ->join('songs','songs.id','plays.songid')
                 ->where('plays.created_at','>=',$date)
                 ->groupBy('plays.songid')
+                ->limit($limit)
                 ->get();
 
         $new['topweekley']=[];
