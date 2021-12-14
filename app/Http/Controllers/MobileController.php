@@ -321,7 +321,6 @@ class MobileController extends Controller
         $baseapiurl=asset('storage/');
 
         $song['song'] = Song::select('songs.id','albums.year',DB::raw('CONCAT("'.url('api/mobile').'/play/",songs.id) as filemp3'),'songs.duration as duration','songs.title as songname',DB::raw('CONCAT("'.$baseapiurl.'/songcover/",songs.cover) as songcover'),'artists.name as artistname',DB::raw('CONCAT("'.$baseapiurl.'/artist/",artists.cover) as artistcover'),'genres.name as genrename',DB::raw('CONCAT("'.$baseapiurl.'/genre/",genres.cover) as genrecover'),'albums.name as albumname',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as albumcover'),DB::raw('CONCAT("'.$baseapiurl.'/songlirik/",songs.lyric) as lyric'),'songs.plays')
-
         ->join('artists','artists.id','songs.artist_id')
         ->join('albums','albums.id','songs.album_id')
         ->join('genres','genres.id','songs.genre_id')
@@ -332,6 +331,22 @@ class MobileController extends Controller
 
         //
     }
+
+
+    public function getTopAlbum(){
+
+
+        $baseapiurl=asset('storage/');
+        $albumall = Album::all()
+        ->orderByDesc('plays');
+
+        dd($albumall);
+
+        return response()->json($albumall);
+
+        //
+    }
+
 
     public function playsong(String $idsong){
         $song=Song::where('id',$idsong)->get()->first();
