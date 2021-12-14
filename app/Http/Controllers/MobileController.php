@@ -59,8 +59,8 @@ class MobileController extends Controller
         $new['topweekley']=[];
 
         foreach ($data as $mysong) {
-            $song=Song::where('id',$mysong->songid)->first();
-
+            $song=Song::select('songs.id','albums.year',DB::raw('CONCAT("'.url('api/mobile').'/play/",songs.id) as filemp3'),DB::raw('CONCAT("'.$baseapiurl.'/songlirik/",songs.lyric) as lyric'),'songs.duration as duration','songs.title as songname',DB::raw('CONCAT("'.$baseapiurl.'/songcover/",songs.cover) as songcover'),'artists.name as artistname',DB::raw('CONCAT("'.$baseapiurl.'/artist/",artists.cover) as artistcover'),'genres.name as genrename',DB::raw('CONCAT("'.$baseapiurl.'/genre/",genres.cover) as genrecover'),'albums.name as albumname',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as albumcover'),'songs.plays')
+            ->where('id',$mysong->songid)->first();
             $song->plays=$mysong->total;
             array_push($new['topweekley'],$song);
 
