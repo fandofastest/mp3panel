@@ -59,7 +59,7 @@ class MobileController extends Controller
         $new['topweekley']=[];
 
         foreach ($data as $mysong) {
-            $song=Song::where('id',$mysong->songid)->get();
+            $song=Song::where('id',$mysong->songid)->first();
 
             $song->plays=$mysong->total;
             array_push($new['topweekley'],$song);
