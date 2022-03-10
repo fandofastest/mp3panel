@@ -40,6 +40,7 @@ Route::get('mobile/play/{idsong}', [MobileController::class, 'playsong'])->name(
 
 Route::get('mobile/getallalbum/{limit?}', [MobileController::class, 'getAllAlbum'])->name('getAllAlbum');
 Route::get('mobile/getallplaylist/{limit?}', [MobileController::class, 'getAllPlaylist'])->name('getAllPlaylist');
+Route::get('mobile/getallplaylistwithsong/{limit?}', [MobileController::class, 'getAllPlaylistWithSong'])->name('getAllPlaylistWithSong');
 Route::get('mobile/getplaylistbyname/{name}', [MobileController::class, 'getPlaylistByName'])->name('getPlaylistByName');
 Route::get('mobile/gettopchart/{limit?}', [MobileController::class, 'getTopChart'])->name('getTopChart');
 

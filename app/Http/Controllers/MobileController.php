@@ -132,6 +132,41 @@ class MobileController extends Controller
 
 
 
+    public function getAllPlaylistWithSong($limit=25)
+    {
+
+        $baseapiurl=asset('storage/');
+        $playlist = Playlist::select('id','name',DB::raw('CONCAT("'.$baseapiurl.'/playlist/",cover) as cover'))
+        ->where('id', '!=' , 1)
+        ->limit($limit)
+        ->get();
+        $new['result']=[];
+        foreach ($playlist as $data ) {
+            $data->totalsong=$this->countSong($data->id);
+            $data->playlistname=$playlist->name;
+            $data->songs= Playlistsong::select('songs.id','albums.year',DB::raw('CONCAT("'.url('api/mobile').'/play/",songs.id) as filemp3'),'songs.duration as duration','songs.title as songname',DB::raw('CONCAT("'.$baseapiurl.'/songcover/",songs.cover) as songcover'),'artists.name as artistname',DB::raw('CONCAT("'.$baseapiurl.'/artist/",artists.cover) as artistcover'),'genres.name as genrename',DB::raw('CONCAT("'.$baseapiurl.'/genre/",genres.cover) as genrecover'),'albums.name as albumname',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as albumcover'),DB::raw('CONCAT("'.$baseapiurl.'/songlirik/",songs.lyric) as lyric'),'songs.plays')
+            ->join('songs','songs.id','playlistsongs.song_id')
+            ->join('artists','artists.id','songs.artist_id')
+            ->join('albums','albums.id','songs.album_id')
+            ->join('genres','genres.id','songs.genre_id')
+            ->where('playlistsongs.playlist_id',$data->id)
+            ->get();
+
+            array_push($new['result'],$data);
+
+        # code...
+    }
+
+        // $album=Album::all();
+        return response()->json($new);
+
+        //
+    }
+
+
+
+
+
     public function getPlaylistByName($name)
     {
 
