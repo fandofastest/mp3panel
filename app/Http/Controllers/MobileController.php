@@ -106,6 +106,39 @@ class MobileController extends Controller
 
 
 
+    public function getAllAlbumWtihSongs($limit=25)
+    {
+
+        $baseapiurl=asset('storage/');
+        $album = Album::select('.albums.id as id','year','albums.name as name',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as cover'),'albums.deskripsi as deskripsi','genres.name as genre','artists.name as artist','albums.plays',DB::raw('CONCAT("'.$baseapiurl.'/artist/",artists.cover) as artistcover'))
+        ->join('genres','genres.id','albums.genre_id')
+        ->join('artists','artists.id','albums.artist_id')
+        ->limit($limit)
+        ->orderBy('plays', 'desc')
+        ->get();
+        $new['album']=[];
+        foreach ($album as $data ) {
+
+                $data->totalsong=$this->countSongbyalbumid($data->id);
+                $song['song'] = Song::select('songs.id','albums.year',DB::raw('CONCAT("'.url('api/mobile').'/play/",songs.id) as filemp3'),'songs.duration as duration','songs.title as songname',DB::raw('CONCAT("'.$baseapiurl.'/songcover/",songs.cover) as songcover'),'artists.name as artistname',DB::raw('CONCAT("'.$baseapiurl.'/artist/",artists.cover) as artistcover'),'genres.name as genrename',DB::raw('CONCAT("'.$baseapiurl.'/genre/",genres.cover) as genrecover'),'albums.name as albumname',DB::raw('CONCAT("'.$baseapiurl.'/album/",albums.cover) as albumcover'),DB::raw('CONCAT("'.$baseapiurl.'/songlirik/",songs.lyric) as lyric'),'songs.plays')
+                ->join('artists','artists.id','songs.artist_id')
+                ->join('albums','albums.id','songs.album_id')
+                ->join('genres','genres.id','songs.genre_id')
+                ->where('albums.id',$data->id)
+                ->get();
+                array_push($new['album'],$data);
+
+            # code...
+        }
+
+        // $album=Album::all();
+        return response()->json($new);
+
+        //
+    }
+
+
+
 
     public function getAllPlaylist($limit=25)
     {
